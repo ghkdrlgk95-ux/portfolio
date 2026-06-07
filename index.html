@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=1200">
 <title>황기하 — SI 3D 포트폴리오</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -172,22 +172,6 @@
     color:#fff;font-size:13px;padding:10px 18px;border-radius:10px;opacity:0;transition:.3s;
     z-index:200;pointer-events:none;}
   .toast.show{opacity:1;}
-  @media (max-width:680px){
-    section{padding:34px 20px;}h1{font-size:26px;}
-    .metric{flex:1 1 100%;}.thumbs > div,.process > .pcard{flex:1 1 100%;}
-    .metabar{grid-template-columns:1fr 1fr;}
-    /* stack rows vertically on phones */
-    .ba,.maps,.vids,.thumbs,.process,.metrics{flex-direction:column;}
-    /* any pixel-fixed cell from desktop editing: shrink to fit the screen */
-    .rz{width:auto !important;max-width:100% !important;}
-    .textwrap.rz,.metric.rz,.pcard.rz,.meta > span.rz,.hero-img.rz{height:auto !important;}
-    /* image cells keep a usable height based on screen width */
-    .imgslot.rz{height:auto !important;aspect-ratio:16/10;}
-    .imgslot.h-hero.rz{aspect-ratio:16/9;}
-    .imgslot img.slot-img{object-fit:contain;}
-    .meta{flex-direction:column;gap:8px;}
-    .meta > span{width:100% !important;}
-  }
   @media print{
     .bar,.toast{display:none;}
     .drag-handle{display:none!important;}
@@ -341,4 +325,19 @@
 
 
 
+<script>
+(function(){
+  // Show the exact desktop layout on phones, scaled to fit the screen width.
+  function fit(){
+    var wrap=document.querySelector('.wrap');
+    var w=wrap?Math.ceil(wrap.scrollWidth+32):1024;   // content width + body side padding
+    if(w<760)w=760;
+    var mv=document.querySelector('meta[name="viewport"]');
+    if(mv)mv.setAttribute('content','width='+w);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fit);
+  else fit();
+  window.addEventListener('load',fit);
+})();
+</script>
 </body></html>
