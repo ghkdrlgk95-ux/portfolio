@@ -173,9 +173,20 @@
     z-index:200;pointer-events:none;}
   .toast.show{opacity:1;}
   @media (max-width:680px){
-    section{padding:40px 26px;}h1{font-size:30px;}
+    section{padding:34px 20px;}h1{font-size:26px;}
     .metric{flex:1 1 100%;}.thumbs > div,.process > .pcard{flex:1 1 100%;}
     .metabar{grid-template-columns:1fr 1fr;}
+    /* stack rows vertically on phones */
+    .ba,.maps,.vids,.thumbs,.process,.metrics{flex-direction:column;}
+    /* any pixel-fixed cell from desktop editing: shrink to fit the screen */
+    .rz{width:auto !important;max-width:100% !important;}
+    .textwrap.rz,.metric.rz,.pcard.rz,.meta > span.rz,.hero-img.rz{height:auto !important;}
+    /* image cells keep a usable height based on screen width */
+    .imgslot.rz{height:auto !important;aspect-ratio:16/10;}
+    .imgslot.h-hero.rz{aspect-ratio:16/9;}
+    .imgslot img.slot-img{object-fit:contain;}
+    .meta{flex-direction:column;gap:8px;}
+    .meta > span{width:100% !important;}
   }
   @media print{
     .bar,.toast{display:none;}
