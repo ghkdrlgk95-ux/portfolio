@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>황기하 — SI 디지털 트윈 3D 아티스트 포트폴리오</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --ink:#16181d; --sub:#5b626b; --line:#e6e8eb; --soft:#f6f7f9;
+    --accent:#1f5fd1; --accent-soft:#eaf1fc; --card:#fff; --shadow:0 1px 2px rgba(0,0,0,.04);
+    --page:980px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#eceef1;}
+  body{
+    font-family:'Pretendard',-apple-system,sans-serif;color:var(--ink);
+    line-height:1.7;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;
+    padding:64px 16px 120px;
+  }
+
+  /* ===== 상단 툴바 ===== */
+  #toolbar{
+    position:fixed;top:0;left:0;right:0;z-index:1000;height:52px;
+    display:flex;align-items:center;gap:8px;padding:0 16px;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  #toolbar .brand{font-weight:800;font-size:14px;letter-spacing:-.02em;margin-right:8px;}
+  #toolbar .spacer{flex:1;}
+  .btn{
+    font:inherit;font-size:13px;font-weight:600;cursor:pointer;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:7px 12px;border-radius:8px;line-height:1;transition:.12s;white-space:nowrap;
+  }
+  .btn:hover{border-color:#c7ccd3;background:var(--soft);}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .btn.primary:hover{background:#1a52b8;}
+  .btn.on{background:var(--accent-soft);border-color:var(--accent);color:#163e8a;}
+  .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .seg button{border:0;border-radius:0;background:#fff;font-size:12px;padding:7px 10px;}
+  .seg button + button{border-left:1px solid var(--line);}
+  .seg button.on{background:var(--accent);color:#fff;}
+  #saveHint{font-size:12px;color:var(--sub);margin-left:4px;min-width:78px;}
+
+  /* ===== 페이지 ===== */
+  #page{
+    max-width:var(--page);margin:0 auto;background:#fff;
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  }
+  section{padding:30px 40px;border-bottom:1px solid var(--line);position:relative;}
+  section:last-child{border-bottom:0;}
+  section.dragging{opacity:.5;}
+  section.drop-target{box-shadow:inset 0 3px 0 var(--accent);}
+
+  .sec-head{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+  .drag-handle{
+    cursor:grab;color:#b7bdc6;font-size:18px;line-height:1;user-select:none;
+    width:24px;text-align:center;flex:none;
+  }
+  .drag-handle:active{cursor:grabbing;}
+  .sec-title{font-size:20px;font-weight:700;letter-spacing:-.02em;flex:1;}
+  .hero .sec-title{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;}
+
+  /* 편집 가능한 텍스트 */
+  [contenteditable="true"]{outline:none;border-radius:4px;transition:background .1s;}
+  body.edit [contenteditable="true"]:hover{background:#fbfcfe;box-shadow:0 0 0 1px var(--line);}
+  body.edit [contenteditable="true"]:focus{background:#fff;box-shadow:0 0 0 2px var(--accent-soft),0 0 0 1px var(--accent);}
+  [contenteditable] a{color:var(--accent);}
+
+  /* 히어로 */
+  .hero{background:linear-gradient(180deg,#fafbfd,#fff);}
+  .hero-tagline{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.25;margin:6px 0 6px;}
+  .hero-sub{font-size:15px;color:var(--sub);}
+
+  /* 핵심 요약 수치 */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 14px;}
+  .stat{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .stat .num{font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--accent);}
+  .stat .lab{font-size:12.5px;color:var(--sub);margin-top:2px;}
+  .pipeline{font-size:14px;color:var(--sub);background:var(--accent-soft);border-radius:10px;padding:10px 14px;color:#163e8a;}
+
+  /* 카드 그리드 */
+  .grid{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;}
+  .grid.thumbs .card{}
+  .meta{font-size:13.5px;color:var(--sub);margin-top:10px;}
+  .meta b{color:var(--ink);font-weight:600;}
+
+  /* 이미지 카드 */
+  .card{
+    position:relative;width:300px;height:200px;background:var(--soft);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;flex:none;
+    box-shadow:var(--shadow);
+  }
+  .card .imgwrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .card img{
+    position:absolute;left:50%;top:50%;max-width:100%;max-height:100%;
+    transform:translate(-50%,-50%) scale(1);transform-origin:center;
+    user-select:none;-webkit-user-drag:none;
+  }
+  .card .placeholder{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    width:100%;height:100%;color:#aab0b8;font-size:13px;gap:6px;text-align:center;pointer-events:none;padding:10px;
+  }
+  .card .placeholder .ico{font-size:26px;}
+  body.edit .card{cursor:pointer;}
+  body.edit .card.hasimg .imgwrap{cursor:grab;}
+  body.edit .card.hasimg .imgwrap:active{cursor:grabbing;}
+
+  /* 카드 컨트롤 */
+  .card .ctl{position:absolute;top:6px;right:6px;display:none;gap:4px;z-index:5;}
+  body.edit .card:hover .ctl{display:flex;}
+  .card .ctl button{
+    border:0;background:rgba(22,24,29,.72);color:#fff;font-size:11px;font-weight:600;
+    border-radius:6px;padding:4px 7px;cursor:pointer;line-height:1;
+  }
+  .card .ctl button:hover{background:rgba(22,24,29,.92);}
+  .card .rs{position:absolute;background:transparent;z-index:4;display:none;}
+  body.edit .card:hover .rs{display:block;}
+  .card .rs.e{top:0;right:-3px;width:8px;height:100%;cursor:ew-resize;}
+  .card .rs.s{left:0;bottom:-3px;height:8px;width:100%;cursor:ns-resize;}
+  .card .rs.se{right:-3px;bottom:-3px;width:16px;height:16px;cursor:nwse-resize;}
+  body.edit .card:hover .rs.se{background:
+    linear-gradient(135deg,transparent 50%,var(--accent) 50%);border-radius:0 0 12px 0;}
+
+  /* 글 상자 */
+  .textbox{
+    width:100%;background:var(--card);border:1px dashed var(--line);border-radius:12px;
+    padding:14px 16px;font-size:14.5px;position:relative;min-height:48px;
+  }
+  body.edit .textbox{cursor:text;}
+  .textbox .ctl{position:absolute;top:6px;right:6px;display:none;}
+  body.edit .textbox:hover .ctl{display:flex;}
+  .textbox .ctl button{border:0;background:rgba(22,24,29,.72);color:#fff;font-size:11px;font-weight:600;border-radius:6px;padding:4px 7px;cursor:pointer;}
+
+  /* 추가 버튼 */
+  .adders{display:flex;gap:8px;margin-top:14px;}
+  .add{
+    font-size:13px;font-weight:600;color:var(--accent);background:var(--accent-soft);
+    border:1px solid #cfe0fa;border-radius:8px;padding:8px 12px;cursor:pointer;
+  }
+  .add:hover{background:#dcebfd;}
+
+  /* 경력/연락처 */
+  .contact{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;font-size:14.5px;}
+  .contact .row{display:flex;gap:8px;}
+  .contact .k{color:var(--sub);min-width:64px;}
+
+  /* ===== 보기(미리보기) 모드: 편집 도구 숨김 ===== */
+  body.view #toolbar .editonly{display:none;}
+  body.view .drag-handle,
+  body.view .adders,
+  body.view .card .ctl,
+  body.view .card .rs,
+  body.view .textbox .ctl{display:none !important;}
+  body.view .textbox{border-color:transparent;background:transparent;padding:14px 0;}
+  body.view .card{cursor:default;}
+
+  /* 빈 placeholder는 보기에서 숨김 */
+  body.view .card:not(.hasimg){display:none;}
+
+  /* ===== 인쇄(PDF) ===== */
+  @media print{
+    body{padding:0;background:#fff;}
+    #toolbar{display:none;}
+    #page{max-width:none;border:0;border-radius:0;}
+    section{break-inside:avoid;border-bottom:1px solid var(--line);}
+    .drag-handle,.adders,.card .ctl,.card .rs,.textbox .ctl{display:none !important;}
+    .card:not(.hasimg){display:none;}
+  }
+
+  @media(max-width:680px){
+    section{padding:24px 20px;}
+    .stats{grid-template-columns:1fr;}
+    .contact{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body class="edit">
+
+<div id="toolbar">
+  <span class="brand">포트폴리오 편집기</span>
+  <button class="btn primary editonly" id="btnSave">저장</button>
+  <span id="saveHint"></span>
+  <div class="spacer"></div>
+  <div class="seg editonly" title="페이지 폭">
+    <button data-w="720">좁게</button>
+    <button data-w="980" class="on">보통</button>
+    <button data-w="1180">넓게</button>
+  </div>
+  <button class="btn" id="btnView">보기</button>
+  <button class="btn editonly" id="btnExport">보기용 파일 내보내기</button>
+  <button class="btn editonly" id="btnPdf">PDF로 저장</button>
+</div>
+
+<div id="page">
+
+  <!-- 1. 표지 / 히어로 -->
+  <section class="hero" data-sec="hero">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">PORTFOLIO</div></div>
+    <div class="grid" data-slot="cards">
+      <div class="card hasimg-no" style="width:100%;height:340px;"></div>
+    </div>
+    <div class="hero-tagline" contenteditable="true">SI 디지털 트윈 · 실시간 3D 환경 구축</div>
+    <div class="hero-sub" contenteditable="true">CAD 원본부터 경량화·PBR 텍스처·엔진 반입까지 파이프라인 전체를 단독으로 처리하는 3D 아티스트 황기하입니다.</div>
+    <div class="adders"><button class="add" data-add="card">+ 이미지 추가</button><button class="add" data-add="text">+ 글 상자 추가</button></div>
+  </section>
+
+  <!-- 2. 핵심 요약 -->
+  <section data-sec="summary">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">핵심 요약</div></div>
+    <div class="stats">
+      <div class="stat"><div class="num" contenteditable="true">240만 → 8만</div><div class="lab" contenteditable="true">폴리곤 절감 (Tris 기준)</div></div>
+      <div class="stat"><div class="num" contenteditable="true">5년</div><div class="lab" contenteditable="true">SI · 디지털 트윈 실무</div></div>
+      <div class="stat"><div class="num" contenteditable="true">60 FPS</div><div class="lab" contenteditable="true">실시간 구동 환경</div></div>
+    </div>
+    <div class="pipeline" contenteditable="true">파이프라인: CAD 원본 → 메시 경량화 → PBR 텍스처 → Unity 반입 · 최적화</div>
+    <div class="adders"><button class="add" data-add="text">+ 글 상자 추가</button></div>
+  </section>
+
+  <!-- 3. 대표작 ① 디지털 트윈 -->
+  <section data-sec="work1">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">대표작 ① 디지털 트윈</div></div>
+    <div class="grid" data-slot="cards">
+      <div class="card"></div>
+      <div class="card"></div>
+    </div>
+    <div class="meta" contenteditable="true"><b>역할</b> 단독 모델링·최적화 · <b>툴</b> 3ds Max, Substance, Unity · <b>기간</b> 0개월 · <b>협업</b> 개발 1, 기획 1</div>
+    <div class="adders"><button class="add" data-add="card">+ 이미지 추가</button><button class="add" data-add="text">+ 글 상자 추가</button></div>
+  </section>
+
+  <!-- 4. 대표작 ② 건축/인테리어 -->
+  <section data-sec="work2">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">대표작 ② 건축 / 인테리어 (Before / After)</div></div>
+    <div class="grid" data-slot="cards">
+      <div class="card"></div>
+      <div class="card"></div>
+    </div>
+    <div class="meta" contenteditable="true"><b>역할</b> CAD 정리·경량화·텍스처 · <b>툴</b> 3ds Max, Substance · <b>기간</b> 0개월</div>
+    <div class="adders"><button class="add" data-add="card">+ 이미지 추가</button><button class="add" data-add="text">+ 글 상자 추가</button></div>
+  </section>
+
+  <!-- 5. 대표작 ③ VR / 개인 데모 -->
+  <section data-sec="work3">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">대표작 ③ VR / 개인 데모</div></div>
+    <div class="grid" data-slot="cards">
+      <div class="card"></div>
+    </div>
+    <div class="meta" contenteditable="true"><b>역할</b> 단독 제작 · <b>툴</b> Unity · <b>비고</b> 보안 무관 자유 데모 (GIF 권장)</div>
+    <div class="adders"><button class="add" data-add="card">+ 이미지 추가</button><button class="add" data-add="text">+ 글 상자 추가</button></div>
+  </section>
+
+  <!-- 6. 그 외 작업 -->
+  <section data-sec="more">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">그 외 작업</div></div>
+    <div class="grid thumbs" data-slot="cards">
+      <div class="card" style="width:220px;height:150px;"></div>
+      <div class="card" style="width:220px;height:150px;"></div>
+      <div class="card" style="width:220px;height:150px;"></div>
+    </div>
+    <div class="adders"><button class="add" data-add="card">+ 이미지 추가</button></div>
+  </section>
+
+  <!-- 7. 작업 방식 / 협업 -->
+  <section data-sec="how">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">작업 방식 / 협업</div></div>
+    <div class="textbox" contenteditable="true">개발팀이 요구하는 폴리곤·드로우콜 예산을 먼저 받아 그 안에서 비주얼을 맞춥니다. CAD 설계 데이터를 직접 읽을 수 있어 아트–개발 사이의 사양 통역이 가능하고, 엔진 반입 후 발생하는 머티리얼·라이트맵 문제까지 직접 정리합니다.</div>
+    <div class="adders"><button class="add" data-add="text">+ 글 상자 추가</button></div>
+  </section>
+
+  <!-- 8. 경력 요약 / 연락처 -->
+  <section data-sec="contact">
+    <div class="sec-head"><span class="drag-handle">⠿</span><div class="sec-title" contenteditable="true">경력 요약 / 연락처</div></div>
+    <div class="contact">
+      <div class="row"><span class="k">이름</span><span contenteditable="true">황기하</span></div>
+      <div class="row"><span class="k">직무</span><span contenteditable="true">SI 디지털 트윈 3D 아티스트</span></div>
+      <div class="row"><span class="k">경력</span><span contenteditable="true">약 5년 (와이엠엑스 외)</span></div>
+      <div class="row"><span class="k">툴</span><span contenteditable="true">3ds Max, Substance, Unity, AutoCAD</span></div>
+      <div class="row"><span class="k">이메일</span><span contenteditable="true">your@email.com</span></div>
+      <div class="row"><span class="k">링크</span><span contenteditable="true">https://ghkdrlgk95-ux.github.io/portfolio/</span></div>
+    </div>
+    <div class="adders"><button class="add" data-add="text">+ 글 상자 추가</button></div>
+  </section>
+
+</div>
+
+<input type="file" id="fileInput" accept="image/*" hidden>
+
+<script>
+(function(){
+  "use strict";
+  const KEY = "hgh_portfolio_v1";
+  const page = document.getElementById('page');
+  const fileInput = document.getElementById('fileInput');
+  let pendingCard = null;
+
+  /* ---------- 이미지 카드 상태(scale/x/y) ---------- */
+  function cardImg(card){ return card.querySelector('img'); }
+  function applyTransform(card){
+    const img = cardImg(card); if(!img) return;
+    const s = +card.dataset.scale || 1;
+    const x = +card.dataset.x || 0;
+    const y = +card.dataset.y || 0;
+    img.style.transform = `translate(-50%,-50%) translate(${x}px,${y}px) scale(${s})`;
+  }
+  function ensurePlaceholder(card){
+    if(card.querySelector('.imgwrap')) return;
+    card.insertAdjacentHTML('afterbegin',
+      '<div class="imgwrap"><div class="placeholder"><span class="ico">🖼️</span><span>클릭해서 이미지 넣기</span></div></div>');
+  }
+  function ensureControls(card){
+    if(card.querySelector('.ctl')) return;
+    card.insertAdjacentHTML('beforeend',
+      '<div class="ctl"><button data-act="replace">교체</button><button data-act="del">×</button></div>'+
+      '<div class="rs e"></div><div class="rs s"></div><div class="rs se"></div>');
+  }
+  function setImage(card, dataUrl){
+    let wrap = card.querySelector('.imgwrap');
+    wrap.innerHTML = '<img alt="">';
+    wrap.querySelector('img').src = dataUrl;
+    card.classList.add('hasimg');
+    card.dataset.scale = 1; card.dataset.x = 0; card.dataset.y = 0;
+    applyTransform(card);
+  }
+  function clearImage(card){
+    const wrap = card.querySelector('.imgwrap');
+    wrap.innerHTML = '<div class="placeholder"><span class="ico">🖼️</span><span>클릭해서 이미지 넣기</span></div>';
+    card.classList.remove('hasimg');
+  }
+
+  /* ---------- 카드 초기화 ---------- */
+  function initCard(card){
+    if(card.dataset.init) return;
+    card.dataset.init = "1";
+    ensurePlaceholder(card);
+    ensureControls(card);
+    if(!card.dataset.w0){ card.dataset.w0 = card.style.width || ''; card.dataset.h0 = card.style.height || ''; }
+    if(cardImg(card)){ card.classList.add('hasimg'); applyTransform(card); }
+  }
+
+  /* ---------- 이벤트 위임 ---------- */
+  page.addEventListener('click', function(e){
+    if(!document.body.classList.contains('edit')) return;
+    const addBtn = e.target.closest('.add');
+    if(addBtn){ handleAdd(addBtn); return; }
+    const ctlBtn = e.target.closest('.card .ctl button');
+    if(ctlBtn){
+      const card = ctlBtn.closest('.card');
+      if(ctlBtn.dataset.act==='del'){ card.remove(); scheduleHint('변경됨'); }
+      else { pendingCard = card; fileInput.click(); }
+      e.stopPropagation(); return;
+    }
+    const tdel = e.target.closest('.textbox .ctl button');
+    if(tdel){ tdel.closest('.textbox').remove(); scheduleHint('변경됨'); return; }
+    const card = e.target.closest('.card');
+    if(card && !card.classList.contains('hasimg') && !e.target.closest('.rs')){
+      pendingCard = card; fileInput.click();
+    }
+  });
+
+  fileInput.addEventListener('change', function(){
+    const f = fileInput.files[0]; if(!f || !pendingCard) return;
+    const r = new FileReader();
+    r.onload = ()=>{ setImage(pendingCard, r.result); scheduleHint('변경됨'); pendingCard=null; };
+    r.readAsDataURL(f);
+    fileInput.value = "";
+  });
+
+  /* ---------- 이미지 줌(휠) / 이동(드래그) ---------- */
+  page.addEventListener('wheel', function(e){
+    if(!document.body.classList.contains('edit')) return;
+    const card = e.target.closest('.card.hasimg'); if(!card) return;
+    e.preventDefault();
+    let s = +card.dataset.scale || 1;
+    s *= e.deltaY < 0 ? 1.08 : 0.926;
+    s = Math.min(8, Math.max(0.2, s));
+    card.dataset.scale = s; applyTransform(card); scheduleHint('변경됨');
+  }, {passive:false});
+
+  let drag = null;
+  page.addEventListener('mousedown', function(e){
+    if(!document.body.classList.contains('edit')) return;
+    const card = e.target.closest('.card.hasimg');
+    if(!card || e.target.closest('.rs') || e.target.closest('.ctl')) return;
+    e.preventDefault();
+    drag = { card, sx:e.clientX, sy:e.clientY, ox:+card.dataset.x||0, oy:+card.dataset.y||0 };
+  });
+
+  /* ---------- 리사이즈 ---------- */
+  let rs = null;
+  page.addEventListener('mousedown', function(e){
+    const h = e.target.closest('.rs'); if(!h) return;
+    const card = h.closest('.card'); e.preventDefault(); e.stopPropagation();
+    rs = { card, sx:e.clientX, sy:e.clientY, w:card.offsetWidth, h:card.offsetHeight,
+           dir: h.classList.contains('se')?'se':(h.classList.contains('e')?'e':'s') };
+  });
+
+  window.addEventListener('mousemove', function(e){
+    if(drag){
+      drag.card.dataset.x = drag.ox + (e.clientX-drag.sx);
+      drag.card.dataset.y = drag.oy + (e.clientY-drag.sy);
+      applyTransform(drag.card);
+    }
+    if(rs){
+      if(rs.dir!=='s') rs.card.style.width  = Math.max(120, rs.w + (e.clientX-rs.sx)) + 'px';
+      if(rs.dir!=='e') rs.card.style.height = Math.max(90,  rs.h + (e.clientY-rs.sy)) + 'px';
+    }
+  });
+  window.addEventListener('mouseup', function(){
+    if(drag||rs) scheduleHint('변경됨');
+    drag = null; rs = null;
+  });
+
+  /* 더블클릭 → 칸 크기 복원 */
+  page.addEventListener('dblclick', function(e){
+    const card = e.target.closest('.card'); if(!card) return;
+    if(e.target.closest('.imgwrap') && card.classList.contains('hasimg')) return; // 이미지 영역 더블클릭은 무시
+    card.style.width = card.dataset.w0 || '';
+    card.style.height = card.dataset.h0 || '';
+    scheduleHint('변경됨');
+  });
+
+  /* ---------- 항목 추가 ---------- */
+  function handleAdd(btn){
+    const sec = btn.closest('section');
+    if(btn.dataset.add==='card'){
+      let slot = sec.querySelector('[data-slot="cards"]');
+      if(!slot){ slot=document.createElement('div'); slot.className='grid'; slot.dataset.slot='cards'; sec.querySelector('.adders').before(slot); }
+      const card = document.createElement('div');
+      card.className='card';
+      if(slot.classList.contains('thumbs')){ card.style.width='220px'; card.style.height='150px'; }
+      slot.appendChild(card); initCard(card);
+    } else {
+      const tb = document.createElement('div');
+      tb.className='textbox'; tb.setAttribute('contenteditable','true');
+      tb.innerHTML = '내용을 입력하세요. URL을 적으면 보기/공유본에서 자동으로 링크가 됩니다.'+
+                     '<div class="ctl"><button>×</button></div>';
+      sec.querySelector('.adders').before(tb);
+      tb.focus();
+    }
+    scheduleHint('변경됨');
+  }
+  // 기존 textbox에 삭제 버튼 부여
+  page.querySelectorAll('.textbox').forEach(tb=>{
+    if(!tb.querySelector('.ctl')) tb.insertAdjacentHTML('beforeend','<div class="ctl"><button>×</button></div>');
+  });
+
+  /* ---------- 섹션 드래그 정렬 ---------- */
+  let dragSec = null;
+  page.querySelectorAll('section').forEach(setupSecDrag);
+  function setupSecDrag(sec){
+    const h = sec.querySelector('.drag-handle');
+    h.addEventListener('mousedown', ()=> sec.setAttribute('draggable','true'));
+    sec.addEventListener('dragstart', e=>{ dragSec=sec; sec.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; });
+    sec.addEventListener('dragend', ()=>{ sec.classList.remove('dragging'); sec.removeAttribute('draggable');
+      page.querySelectorAll('section').forEach(s=>s.classList.remove('drop-target')); scheduleHint('변경됨'); });
+    sec.addEventListener('dragover', e=>{ e.preventDefault();
+      if(dragSec && dragSec!==sec){ sec.classList.add('drop-target'); } });
+    sec.addEventListener('dragleave', ()=> sec.classList.remove('drop-target'));
+    sec.addEventListener('drop', e=>{ e.preventDefault(); sec.classList.remove('drop-target');
+      if(dragSec && dragSec!==sec){
+        const r = sec.getBoundingClientRect();
+        if(e.clientY < r.top + r.height/2) page.insertBefore(dragSec, sec);
+        else page.insertBefore(dragSec, sec.nextSibling);
+      }
+    });
+  }
+
+  /* ---------- 페이지 폭 ---------- */
+  document.querySelectorAll('.seg [data-w]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('.seg [data-w]').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      document.documentElement.style.setProperty('--page', b.dataset.w+'px');
+      scheduleHint('변경됨');
+    });
+  });
+
+  /* ---------- 보기(미리보기) 모드 ---------- */
+  const btnView = document.getElementById('btnView');
+  btnView.addEventListener('click', ()=>{
+    const view = document.body.classList.toggle('view');
+    document.body.classList.toggle('edit', !view);
+    btnView.textContent = view ? '편집' : '보기';
+    btnView.classList.toggle('on', view);
+    if(view) linkifyAll(); else delinkifyAll();
+  });
+  // 편집 중에는 textbox 안의 자동 링크 클릭 방지를 위해 보기에서만 변환
+  function linkifyAll(){ page.querySelectorAll('.textbox,[contenteditable]').forEach(linkify); }
+  function delinkifyAll(){ /* 편집모드 복귀 시 원문 텍스트 유지: 변환된 a는 그대로 둬도 편집 가능 */ }
+  function linkify(el){
+    if(el.dataset.linked) return;
+    const rx = /(https?:\/\/[^\s<]+)/g;
+    el.childNodes.forEach(node=>{
+      if(node.nodeType===3 && rx.test(node.nodeValue)){
+        const span=document.createElement('span');
+        span.innerHTML = node.nodeValue.replace(rx,'<a href="$1" target="_blank" rel="noopener">$1</a>');
+        node.replaceWith(span);
+      }
+    });
+    el.dataset.linked="1";
+  }
+
+  /* ---------- 저장 (localStorage) ---------- */
+  let hintTimer=null;
+  function scheduleHint(msg){ const el=document.getElementById('saveHint'); el.textContent='● '+(msg||'변경됨')+' (미저장)'; el.style.color='#b25b00'; }
+  function setSaved(){ const el=document.getElementById('saveHint'); el.textContent='✓ 저장됨'; el.style.color='var(--sub)'; }
+
+  document.getElementById('btnSave').addEventListener('click', save);
+  function save(){
+    try{
+      const data = { html: page.innerHTML, pageWidth: getComputedStyle(document.documentElement).getPropertyValue('--page').trim() };
+      localStorage.setItem(KEY, JSON.stringify(data));
+      setSaved();
+    }catch(err){
+      alert('저장에 실패했습니다. 이미지(특히 PNG·GIF) 용량이 브라우저 저장 한도(약 5MB)를 넘으면 저장되지 않습니다.\n\n확실한 보관·전달은 [보기용 파일 내보내기]를 사용하세요(용량 제한 없음).');
+    }
+  }
+  function restore(){
+    try{
+      const raw = localStorage.getItem(KEY); if(!raw) return;
+      const data = JSON.parse(raw);
+      if(data.html){ page.innerHTML = data.html; }
+      if(data.pageWidth){
+        document.documentElement.style.setProperty('--page', data.pageWidth);
+        document.querySelectorAll('.seg [data-w]').forEach(x=>x.classList.toggle('on', x.dataset.w+'px'===data.pageWidth));
+      }
+      // 복원 후 카드/드래그 재초기화
+      page.querySelectorAll('.card').forEach(c=>{ c.dataset.init=''; initCard(c); });
+      page.querySelectorAll('section').forEach(setupSecDrag);
+      setSaved();
+    }catch(e){ /* 무시 */ }
+  }
+
+  /* ---------- 보기용 파일 내보내기 ---------- */
+  document.getElementById('btnExport').addEventListener('click', exportHTML);
+  function exportHTML(){
+    const clone = page.cloneNode(true);
+    // 편집 흔적 제거
+    clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+    clone.querySelectorAll('.drag-handle,.adders,.card .ctl,.card .rs,.textbox .ctl').forEach(el=>el.remove());
+    clone.querySelectorAll('.card:not(.hasimg)').forEach(el=>el.remove());
+    clone.querySelectorAll('[draggable]').forEach(el=>el.removeAttribute('draggable'));
+    clone.querySelectorAll('[data-init]').forEach(el=>el.removeAttribute('data-init'));
+    // URL 자동 링크
+    clone.querySelectorAll('.textbox, .hero-sub, .contact span, .meta, .pipeline').forEach(el=>{
+      el.innerHTML = el.innerHTML.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
+    });
+    const css = document.querySelector('style').innerHTML;
+    const pageW = getComputedStyle(document.documentElement).getPropertyValue('--page').trim() || '980px';
+    const doc =
+`<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>${document.title}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>:root{--page:${pageW};}${css}
+body{padding:40px 16px;}#toolbar{display:none;}
+.card{cursor:default;}.textbox{border-color:transparent;background:transparent;padding:14px 0;}</style>
+</head><body class="view">
+<div id="page">${clone.innerHTML}</div>
+<script>
+/* 모바일: 콘텐츠 실제 폭으로 viewport 고정 → 어느 기기에서도 동일 레이아웃(축소 표시) */
+(function(){
+  var w=${parseInt(pageW)||980}+32;
+  var m=document.createElement('meta');m.name='viewport';
+  m.content='width='+w+', initial-scale='+(Math.min(1,(screen.width/w)));
+  document.head.appendChild(m);
+})();
+<\/script>
+</body></html>`;
+    const blob = new Blob([doc], {type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'portfolio_share.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  /* ---------- PDF ---------- */
+  document.getElementById('btnPdf').addEventListener('click', ()=>window.print());
+
+  /* ---------- 변경 감지 ---------- */
+  page.addEventListener('input', ()=>scheduleHint('변경됨'));
+
+  /* ---------- 시작 ---------- */
+  page.querySelectorAll('.card').forEach(initCard);
+  restore();
+})();
+</script>
+</body>
+</html>
