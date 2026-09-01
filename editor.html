@@ -689,50 +689,77 @@
     });
     return st;
   }
-  /* 현재 편집 상태를 그대로 담은 편집기 HTML 문자열 */
-  function serializeDoc() {
+  var NL = String.fromCharCode(10);
+  var IMGRE = "data:image/([a-z]+);base64,([A-Za-z0-9+/=]+)";
+
+  /* 편집기 DOM에서 실행 전용 요소를 걷어낸 사본 */
+  function cleanClone(viewer) {
     $all(".textcard[data-key]").forEach(tcRender);
     var clone = document.documentElement.cloneNode(true);
-    /* 실행 중에만 붙는 요소는 뺀다 (다시 열 때 자동으로 붙음) */
-    $all(".rzh, .del, .additem, .drag-handle, .hidefile", clone).forEach(function (n) { n.remove(); });
+    var drop = ".rzh, .del, .additem, .drag-handle, .hidefile";
+    if (viewer) drop += ", #editbar, #previewBack, #toast, #pf-editor-script";
+    $all(drop, clone).forEach(function (n) { n.remove(); });
     $all("[contenteditable]", clone).forEach(function (n) { n.removeAttribute("contenteditable"); });
-    $all("section", clone).forEach(function (n) { n.setAttribute("draggable", "false"); n.classList.remove("dragging"); });
-    /* <img>에 이미지가 있으면 data-src 사본은 버린다 (같은 이미지 2벌 저장 방지) */
+    $all("section", clone).forEach(function (n) {
+      n.setAttribute("draggable", "false"); n.classList.remove("dragging");
+    });
+    /* <img>에 이미지가 있으면 data-src 사본은 버린다 (같은 이미지 2벌 방지) */
     $all(".imgslot[data-src]", clone).forEach(function (n) {
       if (n.querySelector("img.slot-img")) n.removeAttribute("data-src");
     });
     var b = clone.querySelector("body");
-    if (b) b.className = "editing";
+    if (b) b.className = viewer ? "viewer" : "editing";
     if (body.classList.contains("editing")) $all(".textcard[data-key]").forEach(tcToPlain);
-    return "<!DOCTYPE html>" + "\n" + clone.outerHTML;
+    return "<!DOCTYPE html>" + NL + clone.outerHTML;
+  }
+  /* 편집용 원본 (이미지 내장) */
+  function serializeDoc() { return cleanClone(false); }
+  /* 사이트용 (이미지를 images/imgNN.jpg 참조로 교체) */
+  function serializeSite(editorHtml) {
+    var re = new RegExp(IMGRE, "g"), m, map = {}, i = 0;
+    while ((m = re.exec(editorHtml)) !== null) {
+      if (!map[m[2]]) { i++; map[m[2]] = "images/img" + (i < 10 ? "0" + i : i) + ".jpg"; }
+    }
+    return cleanClone(true).replace(new RegExp(IMGRE, "g"), function (whole, ext, b64) {
+      return map[b64] || whole;
+    });
+  }
+  function post(path, text) {
+    return fetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "text/html; charset=utf-8" },
+      body: text
+    }).then(function (r) {
+      return r.text().then(function (t) {
+        if (!r.ok) throw new Error(t || ("HTTP " + r.status));
+        return t;
+      });
+    });
   }
   function save() {
-    /* 로컬 서버로 열었을 때: 원본 파일을 그대로 덮어쓴다 */
-    if (location.protocol === "http:" || location.protocol === "https:") {
-      var html = serializeDoc();
-      var mb = Math.round(html.length / 1048576 * 10) / 10;
+    /* 로컬 서버(편집기 실행.bat)로 열었을 때만 파일에 기록할 수 있다 */
+    var localhost = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+    if (localhost && location.protocol.indexOf("http") === 0) {
+      var editorHtml = serializeDoc();
+      var siteHtml = serializeSite(editorHtml);
+      var mb = Math.round(editorHtml.length / 1048576 * 10) / 10;
       toast("저장 중… " + mb + "MB");
-      fetch("__save", {
-        method: "POST",
-        headers: { "Content-Type": "text/html; charset=utf-8" },
-        body: html
-      }).then(function (r) {
-        return r.text().then(function (t) { if (!r.ok) throw new Error(t || ("HTTP " + r.status)); return t; });
+      post("__save", editorHtml).then(function () {
+        return post("__site", siteHtml);
       }).then(function () {
-        /* 파일이 최신이므로 낡은 localStorage 상태가 덮어쓰지 않게 지운다 */
         try { localStorage.removeItem(PKEY); } catch (e) { }
-        toast("파일에 저장됨 · " + mb + "MB");
+        toast("저장됨 · 편집본 " + mb + "MB + 사이트 index.html");
       }).catch(function (e) {
         try { localStorage.setItem(PKEY, JSON.stringify(collectState())); } catch (e2) { }
-        toast("파일 저장 실패: " + e.message);
+        toast("저장 실패: " + e.message);
       });
       return;
     }
-    /* file:// 로 연 경우 — 브라우저가 원본 파일에 쓸 수 없다 */
+    /* file:// 로 연 경우 — 브라우저가 파일에 쓸 수 없다 */
     try {
       $all(".textcard[data-key]").forEach(function (el) { el.setAttribute("data-raw", el.textContent); });
       localStorage.setItem(PKEY, JSON.stringify(collectState()));
-      toast("file:// 에서는 파일에 못 씁니다 — ‘편집기 실행.bat’으로 여세요");
+      toast("이 주소로는 파일에 못 씁니다 — ‘편집기 실행.bat’으로 여세요");
     } catch (e) {
       toast("저장 실패: 저장 공간 초과");
     }
