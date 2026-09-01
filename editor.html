@@ -79,6 +79,14 @@
     cursor:pointer;z-index:4;padding:0;}
   body.editing .rz:hover .del{display:block;}
   .rz .del:hover{background:#c0392b;}
+  .rz .lockbtn{display:none;position:absolute;top:5px;right:29px;width:20px;height:20px;
+    border-radius:50%;border:none;background:rgba(20,24,29,.55);color:#fff;font-size:11px;
+    line-height:20px;text-align:center;cursor:pointer;z-index:5;padding:0;}
+  body.editing .imgslot:hover .lockbtn{display:block;}
+  body.editing .imgslot[data-lock="1"] .lockbtn{display:block;background:var(--accent);right:5px;}
+  .imgslot[data-lock="1"] .rzh,.imgslot[data-lock="1"] .del{display:none!important;}
+  body.editing .imgslot[data-lock="1"]{cursor:default!important;outline-color:transparent!important;}
+  body.editing .imgslot[data-lock="1"]:hover .ph{display:none!important;}
   .additem{display:none;align-items:center;gap:5px;font-family:inherit;font-size:13px;font-weight:500;
     color:var(--accent);background:var(--accent-soft);border:1px dashed var(--accent);border-radius:10px;
     padding:8px 14px;cursor:pointer;margin-top:14px;transition:.12s;}
@@ -185,7 +193,7 @@
     .drag-handle{display:none!important;}
     .colctl{display:none!important;}
     .additem{display:none!important;}
-    .rz .del{display:none!important;}
+    .rz .del,.rz .lockbtn{display:none!important;}
     body{background:#fff;}.wrap{margin:0;}
     section{break-inside:avoid;border-color:#ddd;}
     .imgslot{border:1px solid #ddd;}
@@ -362,6 +370,8 @@
     });
   }
 
+  function isLocked(el) { return el && el.getAttribute("data-lock") === "1"; }
+
   /* ---------- 이미지 슬롯 ---------- */
   function applyImgTransform(slot) {
     var img = $(".slot-img", slot);
@@ -411,10 +421,12 @@
     slot.addEventListener("click", function () {
       if (!body.classList.contains("editing")) return;
       if (moved) { moved = false; return; }
+      if (isLocked(slot)) { toast("잠긴 이미지입니다 — 자물쇠를 눌러 해제하세요"); return; }
       pickImage(slot);
     });
     slot.addEventListener("wheel", function (e) {
       if (!body.classList.contains("editing") || !slot.classList.contains("filled")) return;
+      if (isLocked(slot)) return;
       e.preventDefault();
       var z = parseFloat(slot.getAttribute("data-zoom") || "1") || 1;
       z *= (e.deltaY < 0 ? 1.08 : 0.926);
@@ -424,7 +436,9 @@
     }, { passive: false });
     slot.addEventListener("mousedown", function (e) {
       if (!body.classList.contains("editing") || !slot.classList.contains("filled")) return;
-      if (e.target.classList.contains("rzh") || e.target.classList.contains("del")) return;
+      if (isLocked(slot)) return;
+      if (e.target.classList.contains("rzh") || e.target.classList.contains("del")
+          || e.target.classList.contains("lockbtn")) return;
       dragging = true; moved = false;
       sx = e.clientX; sy = e.clientY;
       ox0 = parseFloat(slot.getAttribute("data-ox") || "0") || 0;
@@ -444,21 +458,41 @@
 
   /* ---------- 리사이즈 + 삭제 핸들 ---------- */
   function injectRzControls(rz) {
-    if ($(".rzh", rz) && $(".del", rz)) { wireRz(rz); return; }
     if (!$(".rzh", rz)) { var h = document.createElement("div"); h.className = "rzh"; rz.appendChild(h); }
     if (!$(".del", rz)) {
       var d = document.createElement("button"); d.className = "del"; d.type = "button"; d.textContent = "×";
       d.title = "삭제"; rz.appendChild(d);
     }
+    if (rz.classList.contains("imgslot") && !$(".lockbtn", rz)) {
+      var lk = document.createElement("button"); lk.className = "lockbtn"; lk.type = "button";
+      rz.appendChild(lk);
+    }
     wireRz(rz);
   }
   function wireRz(rz) {
     if (rz._rzwired) return; rz._rzwired = true;
-    var handle = $(".rzh", rz), del = $(".del", rz);
+    var handle = $(".rzh", rz), del = $(".del", rz), lock = $(".lockbtn", rz);
     var rs = false, sw, sh, sx, sy;
+    function syncLock() {
+      if (!lock) return;
+      var on = isLocked(rz);
+      lock.textContent = on ? "🔒" : "🔓";
+      lock.title = on ? "잠김 — 눌러서 해제" : "잠그기 (위치·크기 고정)";
+    }
+    if (lock) {
+      syncLock();
+      lock.addEventListener("mousedown", function (e) { e.stopPropagation(); });
+      lock.addEventListener("click", function (e) {
+        e.stopPropagation(); e.preventDefault();
+        var on = isLocked(rz);
+        if (on) rz.removeAttribute("data-lock"); else rz.setAttribute("data-lock", "1");
+        syncLock();
+        toast(on ? "잠금 해제" : "잠금 — 위치·크기가 고정됩니다");
+      });
+    }
     if (handle) {
       handle.addEventListener("mousedown", function (e) {
-        if (!body.classList.contains("editing")) return;
+        if (!body.classList.contains("editing") || isLocked(rz)) return;
         rs = true; sx = e.clientX; sy = e.clientY;
         var r = rz.getBoundingClientRect(); sw = r.width; sh = r.height;
         e.preventDefault(); e.stopPropagation();
@@ -483,6 +517,7 @@
     if (del) {
       del.addEventListener("click", function (e) {
         e.stopPropagation();
+        if (isLocked(rz)) { toast("잠긴 항목은 지울 수 없습니다"); return; }
         rz.parentNode && rz.parentNode.removeChild(rz);
         toast("삭제됨");
       });
@@ -684,7 +719,8 @@
       st.imgs[s.getAttribute("data-img")] = {
         z: s.getAttribute("data-zoom") || "1",
         ox: s.getAttribute("data-ox") || "0",
-        oy: s.getAttribute("data-oy") || "0"
+        oy: s.getAttribute("data-oy") || "0",
+        lk: s.getAttribute("data-lock") || ""
       };
     });
     return st;
@@ -696,7 +732,7 @@
   function cleanClone(viewer) {
     $all(".textcard[data-key]").forEach(tcRender);
     var clone = document.documentElement.cloneNode(true);
-    var drop = ".rzh, .del, .additem, .drag-handle, .hidefile";
+    var drop = ".rzh, .del, .lockbtn, .additem, .drag-handle, .hidefile";
     if (viewer) drop += ", #editbar, #previewBack, #toast, #pf-editor-script";
     $all(drop, clone).forEach(function (n) { n.remove(); });
     $all("[contenteditable]", clone).forEach(function (n) { n.removeAttribute("contenteditable"); });
@@ -783,7 +819,12 @@
     });
     Object.keys(s.imgs || {}).forEach(function (id) {
       var el = document.querySelector('[data-img="' + cssEsc(id) + '"]');
-      if (el) { el.setAttribute("data-zoom", s.imgs[id].z); el.setAttribute("data-ox", s.imgs[id].ox); el.setAttribute("data-oy", s.imgs[id].oy); applyImgTransform(el); }
+      if (el) {
+        el.setAttribute("data-zoom", s.imgs[id].z); el.setAttribute("data-ox", s.imgs[id].ox);
+        el.setAttribute("data-oy", s.imgs[id].oy);
+        if (s.imgs[id].lk === "1") el.setAttribute("data-lock", "1");
+        applyImgTransform(el);
+      }
     });
   }
   function cssEsc(s) { return (window.CSS && CSS.escape) ? CSS.escape(s) : s.replace(/["\\]/g, "\\$&"); }

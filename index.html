@@ -79,6 +79,14 @@
     cursor:pointer;z-index:4;padding:0;}
   body.editing .rz:hover .del{display:block;}
   .rz .del:hover{background:#c0392b;}
+  .rz .lockbtn{display:none;position:absolute;top:5px;right:29px;width:20px;height:20px;
+    border-radius:50%;border:none;background:rgba(20,24,29,.55);color:#fff;font-size:11px;
+    line-height:20px;text-align:center;cursor:pointer;z-index:5;padding:0;}
+  body.editing .imgslot:hover .lockbtn{display:block;}
+  body.editing .imgslot[data-lock="1"] .lockbtn{display:block;background:var(--accent);right:5px;}
+  .imgslot[data-lock="1"] .rzh,.imgslot[data-lock="1"] .del{display:none!important;}
+  body.editing .imgslot[data-lock="1"]{cursor:default!important;outline-color:transparent!important;}
+  body.editing .imgslot[data-lock="1"]:hover .ph{display:none!important;}
   .additem{display:none;align-items:center;gap:5px;font-family:inherit;font-size:13px;font-weight:500;
     color:var(--accent);background:var(--accent-soft);border:1px dashed var(--accent);border-radius:10px;
     padding:8px 14px;cursor:pointer;margin-top:14px;transition:.12s;}
@@ -185,7 +193,7 @@
     .drag-handle{display:none!important;}
     .colctl{display:none!important;}
     .additem{display:none!important;}
-    .rz .del{display:none!important;}
+    .rz .del,.rz .lockbtn{display:none!important;}
     body{background:#fff;}.wrap{margin:0;}
     section{break-inside:avoid;border-color:#ddd;}
     .imgslot{border:1px solid #ddd;}
