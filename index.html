@@ -88,6 +88,19 @@
     cursor:pointer;z-index:4;padding:0;}
   body.editing .rz:hover .del{display:block;}
   .rz .del:hover{background:#c0392b;}
+  /* 칸 자체를 위아래로 옮기는 버튼 (좌상단) */
+  .rz .mvbtn{display:none;position:absolute;top:5px;width:22px;height:20px;border-radius:6px;
+    border:none;background:rgba(20,24,29,.55);color:#fff;font-size:11px;line-height:20px;
+    text-align:center;cursor:pointer;z-index:5;padding:0;font-family:inherit;}
+  .rz .mv-up{left:5px;}
+  .rz .mv-dn{left:31px;}
+  body.editing .rz:hover .mvbtn{display:block;}
+  .rz .mvbtn:hover{background:var(--accent);}
+  .rz .mvbtn:disabled{opacity:.28;cursor:default;}
+  .rz .mvbtn:disabled:hover{background:rgba(20,24,29,.55);}
+  [data-lock="1"] .mvbtn{display:none!important;}
+  .rz.just-moved{animation:blkflash 1s ease-out;}
+  @keyframes blkflash{0%{box-shadow:0 0 0 3px var(--accent);}100%{box-shadow:0 0 0 3px transparent;}}
   .rz .lockbtn{display:none;position:absolute;top:5px;right:29px;width:20px;height:20px;
     border-radius:50%;border:none;background:rgba(20,24,29,.55);color:#fff;font-size:11px;
     line-height:20px;text-align:center;cursor:pointer;z-index:5;padding:0;}
@@ -259,7 +272,7 @@
     .drag-handle{display:none!important;}
     .colctl{display:none!important;}
     .additem{display:none!important;}
-    .rz .del,.rz .lockbtn,.rz .linkbtn,.rz .rzh-e,.rz .rzh-s{display:none!important;}
+    .rz .del,.rz .lockbtn,.rz .linkbtn,.rz .rzh-e,.rz .rzh-s,.rz .mvbtn{display:none!important;}
     body{background:#fff;}.wrap{margin:0;}
     section{break-inside:avoid;border-color:#ddd;}
     .imgslot{border:1px solid #ddd;}
@@ -268,7 +281,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:40-->
+<body class="viewer"><!--pf-serial:41-->
 
 
 
@@ -416,4 +429,4 @@
 
 
 
-<whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></body><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></html>
+<whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></body></html>
