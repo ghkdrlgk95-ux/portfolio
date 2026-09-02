@@ -139,8 +139,7 @@
   body.editing .vidslot:hover .linkbtn{display:block;}
   .vidslot[data-lock="1"] .linkbtn{display:none!important;}
   body.editing .vidslot:hover{border-color:var(--accent);color:var(--accent);}
-  body.editing .vidslot.filled:hover .ph{display:flex;position:absolute;inset:0;align-items:center;
-    justify-content:center;background:rgba(255,255,255,.82);color:var(--accent);}
+  /* 채워진 동영상 칸은 마우스를 올려도 덮지 않는다 (재생 화면을 가리지 않게) */
   body.editing .vidslot[data-lock="1"]{cursor:default!important;outline-color:transparent!important;}
   body.editing .vidslot[data-lock="1"]:hover .ph{display:none!important;}
   body.editing .vidslot[data-lock="1"] iframe,body.editing .vidslot[data-lock="1"] video{pointer-events:auto;}
@@ -224,7 +223,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:6-->
+<body class="viewer"><!--pf-serial:7-->
 
 
 
@@ -302,7 +301,7 @@
       <div><div class="mk">기간</div><div class="mvv" data-key="w1-period">2주</div></div>
       <div><div class="mk">협업</div><div class="mvv" data-key="w1-collab">개발 1 · 기획 1</div></div>
     </div>
-  <div class="vidslot h-big rz filled" data-vid="vid_8k1do4l" data-card="c_t1salc7" data-url="videos/mxspace-webgl.mp4"><video src="videos/mxspace-webgl.mp4" controls="" playsinline="" preload="metadata" poster="videos/mxspace-webgl.jpg"></video><span class="ph">+ 동영상 링크</span></div></section><section data-sec="sec6" data-cid="sec6" draggable="false" class="">
+  </section><section data-sec="sec6" data-cid="sec6" draggable="false" class="">
     <div class="process" data-cid="G8">
       <div class="pcard rz" data-card="c20"><h3 data-key="p1-t" data-ph="제목">개발과의 소통</h3><p data-key="p1-d" data-ph="설명">구현 가능성을 먼저 확인하고, 엔진 제약에 맞춰 에셋 사양을 조율합니다.</p></div>
       <div class="pcard rz" data-card="c21"><h3 data-key="p2-t" data-ph="제목">최적화 기준</h3><p data-key="p2-d" data-ph="설명">타깃 FPS·드로우콜을 기준으로 폴리곤·텍스처 해상도를 설계합니다.</p></div>
@@ -315,7 +314,7 @@
       <div><div class="mk">기간</div><div class="mvv" data-key="hk-period" data-ph="기간"></div></div>
       <div><div class="mk">협업</div><div class="mvv" data-key="hk-collab" data-ph="협업"></div></div>
     </div>
-  </section><section data-sec="sec3" data-cid="sec3" draggable="false">
+  </section><section data-sec="sec_xmtjmzxil0" draggable="false"><h2><span data-key="a_xmtjmzxil1" data-ph="작품명">MXSpace</span></h2><div class="textwrap rz" data-card="c_xmtjmzxil2"><div class="sub-line" data-key="a_xmtjmzxil3" data-ph="설명"></div></div><div class="vidslot h-big rz filled" data-vid="vid_8k1do4l" data-card="c_t1salc7" data-url="videos/mxspace-webgl.mp4"><video src="videos/mxspace-webgl.mp4" controls="" playsinline="" preload="metadata" poster="videos/mxspace-webgl.jpg"></video><span class="ph">+ 동영상 링크</span></div><div class="metabar"><div><div class="mk">본인 역할</div><div class="mvv" data-key="mx-role" data-ph="본인 역할"></div></div><div><div class="mk">사용 툴</div><div class="mvv" data-key="mx-tools" data-ph="사용 툴"></div></div><div><div class="mk">기간</div><div class="mvv" data-key="mx-period" data-ph="기간"></div></div><div><div class="mk">유형</div><div class="mvv" data-key="mx-type" data-ph="유형"></div></div></div></section><section data-sec="sec3" data-cid="sec3" draggable="false">
     <h2><span data-key="w2-title" data-ph="작품명">건축 인테리어 CG</span><span class="badge" data-key="w2-badge">3D max</span></h2>
     <div class="textwrap rz" data-card="t27"><div class="sub-line" data-key="w2-sub" data-ph="설명">건축 CG 데이터를 이미지 렌더링</div></div>
     <div class="ba" data-cid="G3">
