@@ -13,7 +13,7 @@
 | `editor.html` | 편집기 사본 (백업용) |
 | `README.md` | 이 문서 |
 
-편집기 본체(`HwangGiHa_Portfolio.html`, `편집기 실행.bat`, `_편집기_서버.py`)는
+편집기 본체(`HwangGiHa_Portfolio.html`, `편집기 실행.bat`, `_editor_server.py`)는
 용량 때문에 저장소에 넣지 않고 로컬 폴더에 둡니다.
 
 ```
@@ -177,7 +177,7 @@ git -C "D:/YMX_gh 개인/GH자료/git/portfolio" push origin main
 |---|---|
 | `HwangGiHa_Portfolio.html` | **편집용 원본** (이미지 내장, 약 25MB) |
 | `편집기 실행.bat` | 이걸 더블클릭해서 실행 |
-| `_편집기_서버.py` | 저장·커밋·push 를 처리하는 스크립트 |
+| `_editor_server.py` | 저장·커밋·push 를 처리하는 스크립트 |
 | `_backup/` | 저장할 때마다 직전 파일 보관 (최근 5개) |
 | `사용법.md` | 이 문서 |
 
