@@ -242,8 +242,12 @@
     .metabar{grid-template-columns:1fr 1fr;}
     .h-big{height:210px;}
     /* 폰: 넓게 기준으로 박아둔 픽셀 크기를 화면 폭에 맞춘다 */
-    .wrap .rz.sized{width:auto!important;max-width:100%!important;flex:1 1 100%!important;}
-    .wrap .imgslot.sized,.wrap .vidslot.sized{height:auto!important;min-width:0;}
+    .wrap .rz.sized{width:auto!important;max-width:100%!important;flex:1 1 100%!important;
+      height:auto!important;}
+    /* 글자가 길면 칸이 늘어나게 (고정 높이에 잘리지 않도록) */
+    .wrap .metric .mv{font-size:20px;line-height:1.3;overflow-wrap:anywhere;}
+    .wrap .metric,.wrap .textwrap,.wrap .meta > span{overflow:visible!important;}
+    .wrap .imgslot.sized,.wrap .vidslot.sized{min-width:0;}
     .wrap .imgslot.sized img.slot-img{transform:none!important;object-fit:cover!important;}
     .wrap .ba,.wrap .vids,.wrap .maps,.wrap .thumbs{display:block;}
     .wrap .ba > .imgslot,.wrap .vids > .imgslot,.wrap .vids > .vidslot,
@@ -264,12 +268,12 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:36-->
+<body class="viewer"><!--pf-serial:38-->
 
 
 
 
-<div class="wrap w-full">
+<div class="wrap w-full" style="">
 
   <!-- 1. HERO -->
   
