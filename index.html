@@ -74,6 +74,15 @@
     border-right:2px solid var(--hint);border-bottom:2px solid var(--hint);}
   body.editing .rz .rzh{display:block;}
   body.editing .rz:hover .rzh::after{border-color:var(--accent);}
+  /* 오른쪽 모서리 = 가로만, 아래쪽 모서리 = 세로만 */
+  .rz .rzh-e,.rz .rzh-s{display:none;position:absolute;z-index:3;touch-action:none;}
+  .rz .rzh-e{right:0;top:0;bottom:16px;width:9px;cursor:ew-resize;}
+  .rz .rzh-s{left:0;right:16px;bottom:0;height:9px;cursor:ns-resize;}
+  body.editing .rz .rzh-e,body.editing .rz .rzh-s{display:block;}
+  body.editing .rz:hover .rzh-e{background:linear-gradient(90deg,transparent,rgba(31,95,209,.30));}
+  body.editing .rz:hover .rzh-s{background:linear-gradient(180deg,transparent,rgba(31,95,209,.30));}
+  .imgslot[data-lock="1"] .rzh-e,.imgslot[data-lock="1"] .rzh-s,
+  .vidslot[data-lock="1"] .rzh-e,.vidslot[data-lock="1"] .rzh-s{display:none!important;}
   .rz .del{display:none;position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;
     border:none;background:rgba(20,24,29,.55);color:#fff;font-size:13px;line-height:20px;text-align:center;
     cursor:pointer;z-index:4;padding:0;}
@@ -238,7 +247,7 @@
     .drag-handle{display:none!important;}
     .colctl{display:none!important;}
     .additem{display:none!important;}
-    .rz .del,.rz .lockbtn,.rz .linkbtn{display:none!important;}
+    .rz .del,.rz .lockbtn,.rz .linkbtn,.rz .rzh-e,.rz .rzh-s{display:none!important;}
     body{background:#fff;}.wrap{margin:0;}
     section{break-inside:avoid;border-color:#ddd;}
     .imgslot{border:1px solid #ddd;}
@@ -247,7 +256,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:24-->
+<body class="viewer"><!--pf-serial:25-->
 
 
 
@@ -395,4 +404,4 @@
 
 
 
-<whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></body><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></html>
+<whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></body></html>
