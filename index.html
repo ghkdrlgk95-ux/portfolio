@@ -164,6 +164,10 @@
   .metabar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px;
     padding-top:18px;border-top:1px solid var(--line);}
   .metabar .mk{font-size:12px;color:var(--hint);}
+  /* 값이 비어 있어도 눌러서 입력할 수 있도록 클릭 영역을 남긴다 */
+  body.editing .metabar .mk,body.editing .metabar .mvv{min-height:1.25em;}
+  body.editing .metabar .mk:empty::before,body.editing .metabar .mvv:empty::before{
+    content:attr(data-ph);color:var(--hint);opacity:.6;}
   .metabar .mvv{font-size:14px;font-weight:500;margin-top:2px;}
   .thumb-cap{font-size:13px;color:var(--sub);margin-top:8px;}
   .process{display:flex;flex-wrap:wrap;gap:14px;}
@@ -243,7 +247,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:19-->
+<body class="viewer"><!--pf-serial:21-->
 
 
 
@@ -321,19 +325,19 @@
       
     <div class="imgslot h-video rz filled sized" data-img="a1_mq0lso6b" data-card="a1_mq0lso6b" data-zoom="2.502053828071339" style="width: 486px; height: 354px; overflow: hidden;" data-ox="6" data-oy="-80" data-lock="1"><img class="slot-img" alt="" src="images/img07.jpg" style="transform: translate(6px, -80px) scale(2.50205);"><span class="ph"></span></div><div class="imgslot h-video rz filled sized" data-img="a3_mq0ng9m2" data-card="a3_mq0ng9m2" data-zoom="2.502053828071339" data-ox="0" data-oy="-89" style="width: 480px; height: 352px; overflow: hidden;" data-lock="1"><img class="slot-img" alt="" src="images/img08.jpg" style="transform: translate(0px, -89px) scale(2.50205);"><span class="ph"></span></div><div class="imgslot h-video rz filled sized" data-img="a4_mq0ngh38" data-card="a4_mq0ngh38" data-zoom="1.4505808610949866" style="width: 985px; height: 398px; overflow: hidden;" data-ox="14" data-oy="12" data-lock="1"><img class="slot-img" alt="" src="images/img09.jpg" style="transform: translate(14px, 12px) scale(1.45058);"><span class="ph"></span></div></div>
     <div class="grouplbl" data-key="a_pmtjnhzmn0" data-ph="소제목">Unity 실시간 씬</div><div class="vidslot h-big rz filled" data-vid="vid_pmtjnhzmn1" data-card="c_pmtjnhzmn2" data-url="videos/mxview-plant.mp4"><video src="videos/mxview-plant.mp4" controls="" playsinline="" preload="metadata" poster="videos/mxview-plant.jpg"></video><span class="ph">+ 동영상 링크</span></div><div class="metabar">
-      <div><div class="mk">본인 역할</div><div class="mvv" data-key="w1-role">모델링 · 최적화 · 엔진 셋업</div></div>
-      <div><div class="mk">사용 툴</div><div class="mvv" data-key="w1-tools">3ds Max · Unity</div></div>
-      <div><div class="mk">기간</div><div class="mvv" data-key="w1-period">2주</div></div>
-      <div><div class="mk">협업</div><div class="mvv" data-key="w1-collab">개발 1 · 기획 1</div></div>
+      <div><div class="mk" data-key="w1-role-k" data-ph="항목명">본인 역할</div><div class="mvv" data-key="w1-role">모델링 · 최적화 · 엔진 셋업</div></div>
+      <div><div class="mk" data-key="w1-tools-k" data-ph="항목명">사용 툴</div><div class="mvv" data-key="w1-tools">3ds Max · Unity</div></div>
+      <div><div class="mk" data-key="w1-period-k" data-ph="항목명">기간</div><div class="mvv" data-key="w1-period">2주</div></div>
+      <div><div class="mk" data-key="w1-collab-k" data-ph="항목명">협업</div><div class="mvv" data-key="w1-collab">개발 1 · 기획 1</div></div>
     </div>
   </section><section data-sec="sec_vmtibmfcg13" draggable="false" class=""><h2><span data-key="a_vmtibmfcg14" data-ph="작품명">한국기술교육대학교 가상훈련 · 경도시험</span></h2><div class="textwrap rz" data-card="c_vmtibmfcg15"><div class="sub-line" data-key="a_vmtibmfcg16" data-ph="설명">한국기술교육대학교 가상훈련 경도 부분 담당</div></div><div class="grouplbl" data-key="a_vmtibmfcg17" data-ph="소제목">로크웰 경도시험</div><div class="vidslot h-big rz filled" data-vid="vid_vmtibmfcg18" data-card="c_vmtibmfcg19" data-url="videos/hardness-rockwell.mp4"><video src="videos/hardness-rockwell.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-rockwell.jpg"></video><span class="ph">+ 동영상 링크</span></div><div class="grouplbl" data-key="a_vmtibmfcg20" data-ph="소제목">브리넬 경도시험</div><div class="vidslot h-big rz filled" data-vid="vid_vmtibmfcg21" data-card="c_vmtibmfcg22" data-url="videos/hardness-brinell.mp4"><video src="videos/hardness-brinell.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-brinell.jpg"></video><span class="ph">+ 동영상 링크</span></div><div class="grouplbl" data-key="a_vmtibmfcg23" data-ph="소제목">비커스 경도시험</div><div class="vidslot h-big rz filled" data-vid="vid_vmtibmfcg24" data-card="c_vmtibmfcg25" data-url="videos/hardness-vickers.mp4"><video src="videos/hardness-vickers.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-vickers.jpg"></video><span class="ph">+ 동영상 링크</span></div><div class="grouplbl" data-key="a_vmtibmfcg26" data-ph="소제목">쇼어 경도시험</div><div class="vidslot h-big rz filled" data-vid="vid_vmtibmfcg27" data-card="c_vmtibmfcg28" data-url="videos/hardness-shore.mp4"><video src="videos/hardness-shore.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-shore.jpg"></video><span class="ph">+ 동영상 링크</span></div>
     <div class="metabar">
-      <div><div class="mk">본인 역할</div><div class="mvv" data-key="hk-role" data-ph="역할"><span style="letter-spacing: -0.16px;">모델링 · 최적화 · 엔진 셋업</span></div></div>
-      <div><div class="mk">사용 툴</div><div class="mvv" data-key="hk-tools" data-ph="툴"><span style="letter-spacing: -0.16px;">3ds Max · Unity</span><span style="letter-spacing: -0.16px;"> ·&nbsp;Substance painter</span></div></div>
-      <div><div class="mk">기간</div><div class="mvv" data-key="hk-period" data-ph="기간">약 2달</div></div>
-      <div><div class="mk">협업</div><div class="mvv" data-key="hk-collab" data-ph="협업"><span style="letter-spacing: -0.16px;">개발 1 · 기획 1</span></div></div>
+      <div><div class="mk" data-key="hk-role-k" data-ph="항목명">본인 역할</div><div class="mvv" data-key="hk-role" data-ph="역할"><span style="letter-spacing: -0.16px;">모델링 · 최적화 · 엔진 셋업</span></div></div>
+      <div><div class="mk" data-key="hk-tools-k" data-ph="항목명">사용 툴</div><div class="mvv" data-key="hk-tools" data-ph="툴"><span style="letter-spacing: -0.16px;">3ds Max · Unity</span><span style="letter-spacing: -0.16px;"> ·&nbsp;Substance painter</span></div></div>
+      <div><div class="mk" data-key="hk-period-k" data-ph="항목명">기간</div><div class="mvv" data-key="hk-period" data-ph="기간">약 2달</div></div>
+      <div><div class="mk" data-key="hk-collab-k" data-ph="항목명">협업</div><div class="mvv" data-key="hk-collab" data-ph="협업"><span style="letter-spacing: -0.16px;">개발 1 · 기획 1</span></div></div>
     </div>
-  </section><section data-sec="sec_xmtjmzxil0" draggable="false"><h2><span data-key="a_xmtjmzxil1" data-ph="작품명">MXSpace</span></h2><div class="textwrap rz" data-card="c_xmtjmzxil2"><div class="sub-line" data-key="a_xmtjmzxil3" data-ph="설명"></div></div><div class="vidslot h-big rz filled" data-vid="vid_8k1do4l" data-card="c_t1salc7" data-url="videos/mxspace-webgl.mp4"><video src="videos/mxspace-webgl.mp4" controls="" playsinline="" preload="metadata" poster="videos/mxspace-webgl.jpg"></video><span class="ph">+ 동영상 링크</span></div><div class="metabar"><div><div class="mk">본인 역할</div><div class="mvv" data-key="mx-role" data-ph="본인 역할"><span style="letter-spacing: -0.16px;">모델링 · 최적화 · 엔진 셋업</span></div></div><div><div class="mk">사용 툴</div><div class="mvv" data-key="mx-tools" data-ph="사용 툴"><span style="letter-spacing: -0.16px;">3ds Max · Unity</span><span style="letter-spacing: -0.16px;">&nbsp;</span></div></div><div><div class="mk">기간</div><div class="mvv" data-key="mx-period" data-ph="기간"></div></div><div><div class="mk">유형</div><div class="mvv" data-key="mx-type" data-ph="유형"><span style="letter-spacing: -0.16px;">개발 1 · 기획 1</span></div></div></div></section><section data-sec="sec3" data-cid="sec3" draggable="false">
+  </section><section data-sec="sec_xmtjmzxil0" draggable="false"><h2><span data-key="a_xmtjmzxil1" data-ph="작품명">MXSpace</span></h2><div class="textwrap rz" data-card="c_xmtjmzxil2"><div class="sub-line" data-key="a_xmtjmzxil3" data-ph="설명"></div></div><div class="vidslot h-big rz filled" data-vid="vid_8k1do4l" data-card="c_t1salc7" data-url="videos/mxspace-webgl.mp4"><video src="videos/mxspace-webgl.mp4" controls="" playsinline="" preload="metadata" poster="videos/mxspace-webgl.jpg"></video><span class="ph">+ 동영상 링크</span></div><div class="metabar"><div><div class="mk" data-key="mx-role-k" data-ph="항목명">본인 역할</div><div class="mvv" data-key="mx-role" data-ph="본인 역할"><span style="letter-spacing: -0.16px;">모델링 · 최적화 · 엔진 셋업</span></div></div><div><div class="mk" data-key="mx-tools-k" data-ph="항목명">사용 툴</div><div class="mvv" data-key="mx-tools" data-ph="사용 툴"><span style="letter-spacing: -0.16px;">3ds Max · Unity</span><span style="letter-spacing: -0.16px;">&nbsp;</span></div></div><div><div class="mk" data-key="mx-period-k" data-ph="항목명">기간</div><div class="mvv" data-key="mx-period" data-ph="기간"></div></div><div><div class="mk" data-key="mx-type-k" data-ph="항목명">유형</div><div class="mvv" data-key="mx-type" data-ph="유형"><span style="letter-spacing: -0.16px;">개발 1 · 기획 1</span></div></div></div></section><section data-sec="sec3" data-cid="sec3" draggable="false">
     <h2><span data-key="w2-title" data-ph="작품명">건축 인테리어 CG</span><span class="badge" data-key="w2-badge">3ds Max</span></h2>
     <div class="textwrap rz" data-card="t27"><div class="sub-line" data-key="w2-sub" data-ph="설명">건축 CG 데이터를 이미지 렌더링</div></div>
     <div class="ba" data-cid="G3">
@@ -341,10 +345,10 @@
       
     <div class="imgslot h-ba rz filled sized" data-img="a1_mq0n5e9e" data-card="a1_mq0n5e9e" data-zoom="1.0730880000000003" style="width: 985px; height: 685px; overflow: hidden;" data-ox="1" data-oy="-7" data-lock="1"><img class="slot-img" alt="" src="images/img10.jpg" style="transform: translate(1px, -7px) scale(1.07309);"><span class="ph"></span></div><div class="imgslot h-ba rz filled sized" data-img="a5_mq0nk6uz" data-card="a5_mq0nk6uz" data-zoom="1.1894583044998324" style="width: 983px; height: 618px; overflow: hidden;" data-ox="0" data-oy="0" data-lock="1"><img class="slot-img" alt="" src="images/img11.jpg" style="transform: translate(0px, 0px) scale(1.18946);"><span class="ph"></span></div><div class="imgslot h-ba rz filled sized" data-img="a7_mq0nkyhk" data-card="a7_mq0nkyhk" data-zoom="1.08" style="width: 416px; height: 309px; overflow: hidden;" data-ox="1" data-oy="2" data-lock="1"><img class="slot-img" alt="" src="images/img12.jpg" style="transform: translate(1px, 2px) scale(1.08);"><span class="ph"></span></div><div class="imgslot h-ba rz filled sized" data-img="a8_mq0nl1ys" data-card="a8_mq0nl1ys" data-zoom="1.1889826353447177" style="width: 549px; height: 311px; overflow: hidden;" data-ox="0" data-oy="31" data-lock="1"><img class="slot-img" alt="" src="images/img13.jpg" style="transform: translate(0px, 31px) scale(1.18898);"><span class="ph"></span></div></div>
     <div class="metabar">
-      <div><div class="mk">본인 역할</div><div class="mvv" data-key="w2-role">환경 모델링 · 라이트 셋업</div></div>
-      <div><div class="mk">사용 툴</div><div class="mvv" data-key="w2-tools">3ds Max · Photoshop</div></div>
-      <div><div class="mk">기간</div><div class="mvv" data-key="w2-period">4주</div></div>
-      <div><div class="mk">결과</div><div class="mvv" data-key="w2-result">모델하우스·분양 카탈로그에 사용</div></div>
+      <div><div class="mk" data-key="w2-role-k" data-ph="항목명">본인 역할</div><div class="mvv" data-key="w2-role">환경 모델링 · 라이트 셋업</div></div>
+      <div><div class="mk" data-key="w2-tools-k" data-ph="항목명">사용 툴</div><div class="mvv" data-key="w2-tools">3ds Max · Photoshop</div></div>
+      <div><div class="mk" data-key="w2-period-k" data-ph="항목명">기간</div><div class="mvv" data-key="w2-period">4주</div></div>
+      <div><div class="mk" data-key="w2-result-k" data-ph="항목명">결과</div><div class="mvv" data-key="w2-result">모델하우스·분양 카탈로그에 사용</div></div>
     </div>
   </section><section data-sec="sec4" data-cid="sec4" draggable="false" class="">
     <h2><span data-key="w3-title" data-ph="작품명">VR 게임 제작</span><span class="badge" data-key="w3-badge">개인작</span></h2>
@@ -353,10 +357,10 @@
       <div class="imgslot h-video rz sized filled" data-img="w3-main" data-card="c15" style="width: 978px; overflow: hidden; height: 450px;" data-zoom="1.2516498432000003" data-ox="4" data-oy="55" data-lock="1"><img class="slot-img" alt="" src="images/img14.jpg" style="transform: translate(4px, 55px) scale(1.25165);"><span class="ph"></span></div>
     <div class="imgslot h-video rz filled sized" data-img="a9_mq0nn78p" data-card="a9_mq0nn78p" data-zoom="1.1993813916610012" style="width: 978px; height: 451px; overflow: hidden;" data-ox="2" data-oy="44" data-lock="1"><img class="slot-img" alt="" src="images/img15.jpg" style="transform: translate(2px, 44px) scale(1.19938);"><span class="ph"></span></div></div>
     <div class="metabar">
-      <div><div class="mk">본인 역할</div><div class="mvv" data-key="w3-role">에셋<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>모델링<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>텍스처 정리<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>morning씬<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>&nbsp;night씬 작업<!-- notionvc: 6a9b5c55-4130-4517-8296-7e8e4a4ca5b2 --></div></div>
-      <div><div class="mk">사용 툴</div><div class="mvv" data-key="w3-tools">3ds Max · Unity</div></div>
-      <div><div class="mk">기간</div><div class="mvv" data-key="w3-period">2주</div></div>
-      <div><div class="mk">유형</div><div class="mvv" data-key="w3-type">개인 프로젝트</div></div>
+      <div><div class="mk" data-key="w3-role-k" data-ph="항목명">본인 역할</div><div class="mvv" data-key="w3-role">에셋<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>모델링<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>텍스처 정리<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>morning씬<span style="letter-spacing: -0.16px;">&nbsp;·&nbsp;</span>&nbsp;night씬 작업<!-- notionvc: 6a9b5c55-4130-4517-8296-7e8e4a4ca5b2 --></div></div>
+      <div><div class="mk" data-key="w3-tools-k" data-ph="항목명">사용 툴</div><div class="mvv" data-key="w3-tools">3ds Max · Unity</div></div>
+      <div><div class="mk" data-key="w3-period-k" data-ph="항목명">기간</div><div class="mvv" data-key="w3-period">2주</div></div>
+      <div><div class="mk" data-key="w3-type-k" data-ph="항목명">유형</div><div class="mvv" data-key="w3-type">개인 프로젝트</div></div>
     </div>
   </section><section style="border-bottom:none;" data-sec="sec7" data-cid="sec7" draggable="false">
     <div class="timeline">
