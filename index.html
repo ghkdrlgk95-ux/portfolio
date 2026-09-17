@@ -141,7 +141,8 @@
   .textwrap{box-sizing:border-box;}
   body.editing .textwrap{overflow:visible!important;min-height:34px;}
   .textwrap.sized{display:flex;}
-  .textwrap.sized > *{flex:1 1 auto;width:100%;min-height:0;overflow:hidden;}
+  /* 안쪽 글 요소에만 — 손잡이·버튼(절대배치)에 걸리면 상자 폭 전체로 늘어난다 */
+  .textwrap.sized > :not(.rzh):not(.rzh-e):not(.rzh-s):not(.del):not(.mvbtn){flex:1 1 auto;width:100%;min-height:0;overflow:hidden;}
   .textcard{font-size:15px;color:var(--ink);line-height:1.6;outline:none;white-space:pre-wrap;}
   .textcard:empty::before{content:attr(data-ph);color:var(--hint);}
   .addrow{display:flex;gap:8px;flex-wrap:wrap;}
@@ -304,7 +305,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:75-->
+<body class="viewer"><!--pf-serial:77-->
 
 
 
@@ -356,7 +357,7 @@ LG 프로젝트 영상 · 아래 링크에서 바로 열람하실 수 있습니�
       <div class="metric rz sized" data-card="c2" style="width: 173.13px; overflow: hidden; height: 109px;"><div class="ml" data-key="s-m3l" data-ph="라벨">3D 총경력</div><div class="mv" data-key="s-m3v" data-ph="값">5년</div></div>
     <div class="metric rz sized" data-card="c_ox6x485" style="overflow: hidden; width: 169.87px; height: 109.984px;"><div class="ml" data-key="a_usofrnx" data-ph="라벨">건축CG</div><div class="mv" data-key="a_m401z7p" data-ph="값">2년</div></div><div class="metric rz sized" data-card="c_3n9bbvo" style="overflow: hidden; width: 168.23px; height: 108.984px;"><div class="ml" data-key="a_kfqcp1k" data-ph="라벨"><p data-pm-slice="1 1 []"><span style="white-space: pre-wrap;">Digital twin</span></p></div><div class="mv" data-key="a_9i3crc4" data-ph="값">3년</div></div></div>
     
-    <div class="textwrap rz __hov" data-card="t24"><p class="lead" style="margin-top: 0px; font-size: 21px;" data-key="s-intro" data-ph="2줄 소개">디지털 트윈·VR·WebGL 등 다양한 산업 도메인의 SI 프로젝트에서 실시간 3D 에셋을 제작해 왔습니다.<br>클라이언트 요구와 개발 구현 방향을 함께 고려한 작업에 강점이 있습니다.<br>건축 2년 · 디지털 트윈 3년차</p></div><div class="textwrap rz __hov" data-card="t25"><div class="pipe" data-key="s-pipe" data-ph="파이프라인 한 줄">CAD 3D원본 → 3ds Max 경량화 → Substance PBR 텍스처링 → Unity 반입·환경 셋업</div></div>
+    <div class="textwrap rz __hov" data-card="t24" style=""><p class="lead" style="margin-top: 0px; font-size: 21px;" data-key="s-intro" data-ph="2줄 소개">디지털 트윈·VR·WebGL 등 다양한 산업 도메인의 SI 프로젝트에서 실시간 3D 에셋을 제작해 왔습니다.<br>클라이언트 요구와 개발 구현 방향을 함께 고려한 작업에 강점이 있습니다.<br>건축 2년 · 디지털 트윈 3년차</p></div><div class="textwrap rz __hov" data-card="t25"><div class="pipe" data-key="s-pipe" data-ph="파이프라인 한 줄">CAD 3D원본 → 3ds Max 경량화 → Substance PBR 텍스처링 → Unity 반입·환경 셋업</div></div>
   </section><section data-sec="sec6" data-cid="sec6" draggable="false" class="">
     <div class="process" data-cid="G8">
       <div class="pcard rz" data-card="c20"><h3 data-key="p1-t" data-ph="제목">개발과의 소통</h3><p data-key="p1-d" data-ph="설명">구현 가능성을 먼저 확인하고, 엔진 제약에 맞춰 에셋 사양을 조율합니다.</p></div>
@@ -458,4 +459,4 @@ LG 프로젝트 영상 · 아래 링크에서 바로 열람하실 수 있습니�
 
 
 
-</body><whale-quicksearch translate="no" style="visibility: visible;"></whale-quicksearch></html>
+</body></html>
