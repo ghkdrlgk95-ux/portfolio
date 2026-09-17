@@ -109,6 +109,17 @@
   .imgslot[data-lock="1"] .rzh,.imgslot[data-lock="1"] .del{display:none!important;}
   body.editing .imgslot[data-lock="1"]{cursor:default!important;outline-color:transparent!important;}
   body.editing .imgslot[data-lock="1"]:hover .ph{display:none!important;}
+  /* 글자 크기 툴바 — 편집 중 글자를 클릭하면 위에 뜬다 */
+  .txtbar{display:none;position:absolute;z-index:200;background:#16181d;color:#fff;border-radius:8px;
+    padding:4px 6px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.28);align-items:center;gap:4px;}
+  body.editing .txtbar.show{display:inline-flex;}
+  .txtbar button{font-family:inherit;font-size:12px;font-weight:600;border:none;
+    background:rgba(255,255,255,.14);color:#fff;border-radius:5px;padding:3px 7px;cursor:pointer;line-height:1;}
+  .txtbar button:hover{background:var(--accent);}
+  .txtbar .sz{min-width:40px;text-align:center;opacity:.85;font-variant-numeric:tabular-nums;}
+  .txtbar .del2{background:rgba(220,60,60,.4);}
+  .txtbar .del2:hover{background:#c0392b;}
+  body.editing .grouplbl{cursor:text;}
   .additem{display:none;align-items:center;gap:5px;font-family:inherit;font-size:13px;font-weight:500;
     color:var(--accent);background:var(--accent-soft);border:1px dashed var(--accent);border-radius:10px;
     padding:8px 14px;cursor:pointer;margin-top:14px;transition:.12s;}
@@ -271,7 +282,7 @@
     .bar,.toast{display:none;}
     .drag-handle{display:none!important;}
     .colctl{display:none!important;}
-    .additem{display:none!important;}
+    .additem,.txtbar{display:none!important;}
     .rz .del,.rz .lockbtn,.rz .linkbtn,.rz .rzh-e,.rz .rzh-s,.rz .mvbtn{display:none!important;}
     body{background:#fff;}.wrap{margin:0;}
     section{break-inside:avoid;border-color:#ddd;}
@@ -281,7 +292,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:57-->
+<body class="viewer"><!--pf-serial:60-->
 
 
 
@@ -347,7 +358,7 @@
       <div class="imgslot h-ba rz filled sized" data-img="w1-before" data-card="c6" data-ox="89" data-oy="3" data-zoom="1.7034007727063898" style="width: 486.73px; overflow: hidden; height: 298.90px; aspect-ratio: 1.6284;" data-lock="1"><img class="slot-img" alt="" src="images/img02.jpg" style="transform: translate(89px, 3px) scale(1.7034);"><span class="ph"></span></div>
       <div class="imgslot h-ba rz filled sized" data-img="w1-after" data-card="c7" data-ox="64" data-oy="-15" data-zoom="1.5772229376911016" style="width: 478.57px; overflow: hidden; height: 300.53px; aspect-ratio: 1.5924;" data-lock="1"><img class="slot-img" alt="" src="images/img03.jpg" style="transform: translate(64px, -15px) scale(1.57722);"><span class="ph"></span></div>
     </div>
-    <div class="grouplbl" data-key="gl-2" data-ph="소제목">와이어프레임 · 최적화 맵 · Unity 씬</div>
+    <div class="grouplbl" data-key="gl-2" data-ph="소제목" style="">와이어프레임 · 최적화 맵 · Unity 씬</div>
     <div class="maps" data-cid="G4">
       <div class="imgslot h-map rz filled sized" data-img="w1-wire" data-card="c10" data-ox="103.00" data-oy="4.00" data-zoom="1.8038446168754394" style="width: 488.37px; overflow: hidden; height: 313.60px; aspect-ratio: 1.5573;" data-lock="1"><img class="slot-img" alt="" src="images/img04.jpg" style="transform: translate(103px, 4px) scale(1.80384);"></div>
       <div class="imgslot h-map rz filled sized" data-img="w1-alb" data-card="c11" data-ox="68.00" data-oy="-13.00" data-zoom="1.6071072719058468" style="width: 475.30px; overflow: hidden; height: 315.23px; aspect-ratio: 1.5078;" data-lock="1"><img class="slot-img" alt="" src="images/img05.jpg" style="transform: translate(68px, -13px) scale(1.60711);"></div>
