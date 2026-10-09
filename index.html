@@ -255,6 +255,12 @@
   .timeline{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   .tcol h3{font-size:14px;color:var(--hint);font-weight:600;margin-bottom:10px;}
   .tcol p{font-size:14.5px;margin:5px 0;}
+  /* 경력·자격 칼럼 — 작은 라벨 + 값 (메타바와 같은 형식) */
+  .tcol .textwrap{margin-bottom:15px;}
+  .tcol .textwrap:last-child{margin-bottom:0;}
+  .tk{font-size:13px;color:var(--hint);line-height:1.45;}
+  .tv{font-size:16px;color:var(--ink);line-height:1.5;margin-top:1px;}
+  .td{font-size:14px;color:var(--sub);line-height:1.5;margin-top:2px;}
   .bar .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;}
   .bar .seg button{border:none;border-radius:0;border-right:1px solid var(--line);padding:7px 11px;}
   .bar .seg button:last-child{border-right:none;}
@@ -317,6 +323,7 @@
     .toc{grid-template-columns:1fr 1fr;gap:10px;}
     .metric{flex:1 1 100%;}.thumbs > div,.process > .pcard{flex:1 1 100%;}
     .metabar{grid-template-columns:1fr 1fr;}
+    .timeline{grid-template-columns:1fr;gap:24px;}
     .h-big{height:210px;}
     /* 폰: 넓게 기준으로 박아둔 픽셀 크기를 화면 폭에 맞춘다 */
     .wrap .rz.sized{width:auto!important;max-width:100%!important;flex:1 1 100%!important;
@@ -345,7 +352,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:131-->
+<body class="viewer"><!--pf-serial:133-->
 
 
 
@@ -502,17 +509,17 @@ https://drive.google.com/drive/folders/14MoS7ir1jnc5QZkbgqx778gSHm1EjHII?usp=sha
     <div class="timeline">
       <div class="tcol">
         <h3 data-key="th-1" data-ph="소제목" style="font-size: 15px;">경력</h3>
-        <div class="textwrap rz" data-card="t29"><p data-key="c1" data-ph="경력" style="font-size: 16px;">2024.09–현재 · 와이엠엑스 (SI 아트팀)</p></div>
-        <div class="textwrap rz" data-card="t30"><p data-key="c2" data-ph="경력" style="font-size: 16px;">2022.08–2023.07 · 하이메타코어 (그래픽팀) — 인테리어 프랍 모델링 · WebGL 실시간 라이트 환경</p></div>
-        <div class="textwrap rz" data-card="t31"><p data-key="c3" data-ph="경력" style="font-size: 16px;">2013.12–2016.03 · 도시디자인 (건축 CG)</p></div>
+        <div class="textwrap rz" data-card="t29"><div class="tk" data-key="c1-k" data-ph="라벨">2024.09 – 현재</div><div class="tv" data-key="c1" data-ph="내용">와이엠엑스 · SI 아트팀</div></div>
+        <div class="textwrap rz" data-card="t30"><div class="tk" data-key="c2-k" data-ph="라벨">2022.08 – 2023.07</div><div class="tv" data-key="c2" data-ph="내용">하이메타코어 · 그래픽팀</div><div class="td" data-key="c2-d" data-ph="담당 업무">인테리어 프랍 모델링 · WebGL 실시간 라이트 환경</div></div>
+        <div class="textwrap rz" data-card="t31"><div class="tk" data-key="c3-k" data-ph="라벨">2013.12 – 2016.03</div><div class="tv" data-key="c3" data-ph="내용">도시디자인 · 건축 CG</div></div>
       </div>
       <div class="tcol">
         <h3 data-key="th-2" data-ph="소제목" style="font-size: 15px;">자격 · 교육 · 툴 · 연락처</h3>
-        <div class="textwrap rz" data-card="t32"><p data-key="c4" data-ph="자격/툴" style="font-size: 16px;">자격증 : 실내건축기능사</p></div>
-        <div class="textwrap rz" data-card="t33"><p data-key="c5" data-ph="툴" style="font-size: 16px;">툴 : 3ds Max · Pixyz Studio · Substance Painter · Unity · Blender · V-Ray · Photoshop</p></div>
-        <div class="textwrap rz" data-card="c_edu"><p data-key="c-edu" data-ph="교육" style="font-size: 16px;">교육 : 2024 뉴딜 일자리 메타버스 과정 · 2022 동부여성발전센터 실감콘텐츠 제작자 양성과정</p></div>
-        <div class="textwrap rz" data-card="c_ovs"><p data-key="c-ovs" data-ph="해외경험" style="font-size: 16px;">해외 : 2017–2019 호주 · 뉴질랜드 체류 (영어 일상회화)</p></div>
-        <div class="textwrap rz" data-card="t34"><p data-key="c6" data-ph="연락처" style="font-size: 16px;">rlgk479@naver.com · 010-4319-4789</p></div>
+        <div class="textwrap rz" data-card="t32"><div class="tk" data-key="c4-k" data-ph="라벨">자격증</div><div class="tv" data-key="c4" data-ph="내용">실내건축기능사</div></div>
+        <div class="textwrap rz" data-card="t33"><div class="tk" data-key="c5-k" data-ph="라벨">툴</div><div class="tv" data-key="c5" data-ph="내용">3ds Max · Pixyz Studio · Substance Painter · Unity · Blender · V-Ray · Photoshop</div></div>
+        <div class="textwrap rz" data-card="c_edu"><div class="tk" data-key="c-edu-k" data-ph="라벨">교육</div><div class="tv" data-key="c-edu" data-ph="내용">2024 뉴딜 일자리 메타버스 과정 · 2022 동부여성발전센터 실감콘텐츠 제작자 양성과정</div></div>
+        <div class="textwrap rz" data-card="c_ovs"><div class="tk" data-key="c-ovs-k" data-ph="라벨">해외</div><div class="tv" data-key="c-ovs" data-ph="내용">2017–2019 호주 · 뉴질랜드 체류 (영어 일상회화)</div></div>
+        <div class="textwrap rz" data-card="t34"><div class="tk" data-key="c6-k" data-ph="라벨">연락처</div><div class="tv" data-key="c6" data-ph="내용">rlgk479@naver.com · 010-4319-4789</div></div>
       </div>
     </div>
   </section></div>
