@@ -225,6 +225,10 @@
   .h-thumb{height:130px;}
   .ba{display:flex;flex-wrap:wrap;gap:12px;}
   .ba > .imgslot{flex:1 1 240px;}
+  /* Before / After 등 이미지 밑 설명 */
+  .ba > .bacell{flex:1 1 240px;min-width:0;}
+  .bacell > .imgslot.sized{width:auto!important;height:auto!important;}
+  .bacap{font-size:13px;color:var(--sub);margin-top:7px;line-height:1.4;}
   .vids{display:flex;flex-wrap:wrap;gap:12px;}
   .vids > .imgslot{flex:1 1 320px;}
   .ba > .additem,.vids > .additem,.maps > .additem,.thumbs > .additem{flex:0 0 100%;}
@@ -338,6 +342,7 @@
     .wrap .imgslot.sized,.wrap .vidslot.sized{min-width:0;}
     .wrap .imgslot.sized img.slot-img{transform:none!important;object-fit:cover!important;}
     .wrap .ba,.wrap .vids,.wrap .maps,.wrap .thumbs{display:block;}
+    .wrap .ba > .bacell,
     .wrap .ba > .imgslot,.wrap .vids > .imgslot,.wrap .vids > .vidslot,
     .wrap .maps > .imgslot,.wrap .thumbs > div{margin-bottom:12px;}
     .wrap .meta > span.rz.sized{height:auto!important;}
@@ -356,7 +361,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:137-->
+<body class="viewer"><!--pf-serial:140-->
 
 
 
@@ -402,11 +407,7 @@ CAD 데이터를 받아 경량화·텍스처링·실시간 엔진 반입까지, 
       <a href="#p-arch"><img src="images/img05.jpg" alt=""><div class="toc-t" data-key="toc-4" data-ph="제목">건축 인테리어 CG</div><div class="toc-s" data-key="toc-4s" data-ph="한 줄">3ds Max · 렌더링</div></a>
       <a href="#p-vr"><img src="images/img06.jpg" alt=""><div class="toc-t" data-key="toc-5" data-ph="제목">뉴딜 VR 게임 제작</div><div class="toc-s" data-key="toc-5s" data-ph="한 줄">Unity · 개인작</div></a>
     </nav>
-    <div class="meta">
-      <span class="rz sized" data-card="c35" style="width: 296.922px; overflow: hidden; height: 28px;"><b data-key="hero-email-lbl" data-ph="라벨" style="font-size: 14px;">Email</b><span data-key="hero-email" data-ph="이메일" style="font-size: 16px;">rlgk479@naver.com</span></span>
-      <span class="rz sized" data-card="c36" style="width: 237.422px; overflow: hidden; height: 28px;"><b data-key="hero-tel-lbl" data-ph="라벨" style="font-size: 14px;">Tel</b><span data-key="hero-tel" data-ph="연락처" style="font-size: 16px;">010-4319-4789</span></span>
-      
-    </div></section><section data-sec="sec1" data-cid="sec1" draggable="false">
+    </section><section data-sec="sec1" data-cid="sec1" draggable="false">
     <div class="metrics" data-cid="G0">
       <div class="metric rz sized" data-card="c0" style="width: 179.67px; overflow: hidden; height: 110px;"><div class="ml" data-key="s-m1l" data-ph="라벨" style="font-size: 14px;">YMX 누적 프로젝트</div><div class="mv" data-key="s-m1v" data-ph="값">11+</div></div>
       
@@ -438,8 +439,8 @@ CAD 데이터를 받아 경량화·텍스처링·실시간 엔진 반입까지, 
     <div class="textwrap rz" data-card="c_opt"><div class="textcard" data-key="a_opt" data-ph="여기에 내용을 입력하세요" data-raw="폴리곤은 자동 감면으로 줄인 것이 아니라, CAD 원본 모델을 아래에 깔고 형상을 기준 삼아 폴리곤을 정리하면서 다시 모델링했습니다. 이 최적화 작업으로 363만 → 171만(53% 절감)까지 줄였습니다." style="font-size: 17px;">폴리곤은 자동 감면으로 줄인 것이 아니라, CAD 원본 모델을 아래에 깔고 형상을 기준 삼아 폴리곤을 정리하면서 다시 모델링했습니다. 이 최적화 작업으로 363만 → 171만(53% 절감)까지 줄였습니다.</div></div>
     <div class="grouplbl" data-key="gl-1" data-ph="소제목" style="font-size: 15px;">Before / After</div>
     <div class="ba" data-cid="G2">
-      <div class="imgslot w-half h-ba rz filled sized" data-img="w1-before" data-card="c6" data-ox="89" data-oy="3" data-zoom="1.7034007727063898" style="width: 484px; height: 300px; overflow: hidden; aspect-ratio: 1.6133;" data-lock="1"><img class="slot-img" alt="기계설비 플랜트 최적화 전 3D 모델 — 폴리곤 363만" src="images/img07.jpg" style="transform: translate(89px, 3px) scale(1.7034);"><span class="ph"></span></div>
-      <div class="imgslot w-half h-ba rz filled sized" data-img="w1-after" data-card="c7" data-ox="64" data-oy="-15" data-zoom="1.5772229376911016" style="width: 484px; height: 300px; overflow: hidden; aspect-ratio: 1.6133;" data-lock="1"><img class="slot-img" alt="기계설비 플랜트 최적화 후 3D 모델 — 폴리곤 171만" src="images/img08.jpg" style="transform: translate(64px, -15px) scale(1.57722);"><span class="ph"></span></div>
+      <div class="bacell"><div class="imgslot w-half h-ba rz filled sized" data-img="w1-before" data-card="c6" data-ox="89" data-oy="3" data-zoom="1.7034007727063898" style="width: 484px; height: 300px; overflow: hidden; aspect-ratio: 1.6133;" data-lock="1"><img class="slot-img" alt="기계설비 플랜트 최적화 전 3D 모델 — 폴리곤 363만" src="images/img07.jpg" style="transform: translate(89px, 3px) scale(1.7034);"><span class="ph"></span></div><div class="bacap" data-key="ba-cap1" data-ph="이미지 설명">Before · 폴리곤 3,639,145</div></div>
+      <div class="bacell"><div class="imgslot w-half h-ba rz filled sized" data-img="w1-after" data-card="c7" data-ox="64" data-oy="-15" data-zoom="1.5772229376911016" style="width: 484px; height: 300px; overflow: hidden; aspect-ratio: 1.6133;" data-lock="1"><img class="slot-img" alt="기계설비 플랜트 최적화 후 3D 모델 — 폴리곤 171만" src="images/img08.jpg" style="transform: translate(64px, -15px) scale(1.57722);"><span class="ph"></span></div><div class="bacap" data-key="ba-cap2" data-ph="이미지 설명">After · 폴리곤 1,716,420 (53% 절감)</div></div>
     </div>
     <div class="grouplbl" data-key="gl-2" data-ph="소제목" style="font-size: 15px;">와이어프레임 · 최적화 맵 · Unity 씬</div>
     <div class="maps" data-cid="G4">
@@ -464,7 +465,7 @@ CAD 데이터를 받아 경량화·텍스처링·실시간 엔진 반입까지, 
 https://drive.google.com/drive/folders/14MoS7ir1jnc5QZkbgqx778gSHm1EjHII?usp=sharing" style="font-size: 17px;">LG 프로젝트 영상 아래 링크에서 바로 열람하실 수 있습니다. 다만 고객사 보안 자료이므로 외부 공유,유출은 삼가 주세요
 <a href="https://drive.google.com/drive/folders/14MoS7ir1jnc5QZkbgqx778gSHm1EjHII?usp=sharing" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;word-break:break-all;">https://drive.google.com/drive/folders/14MoS7ir1jnc5QZkbgqx778gSHm1EjHII?usp=sharing</a></div></div>
   </section>
-  <section data-sec="sec_vmtibmfcg13" draggable="false" class="" id="p-hardness"><h2><span data-key="a_vmtibmfcg14" data-ph="작품명" style="font-size: 30px;">한국기술교육대학교 가상훈련 · 경도시험</span></h2><div class="textwrap rz" data-card="c_vmtibmfcg15"><div class="sub-line" data-key="a_vmtibmfcg16" data-ph="설명" style="font-size: 17px;">한국기술교육대학교 가상훈련 경도 부분 담당 · 와이엠엑스</div></div><div class="textwrap rz" data-card="c_desc_hardness"><div class="textcard" data-key="a_desc_hardness" data-ph="여기에 내용을 입력하세요" data-raw="한국기술교육대학교 가상훈련 콘텐츠 중 경도시험 파트를 담당했습니다. 로크웰·브리넬·비커스·쇼어 4종의 시험 장비를 3ds Max로 모델링하고 Substance Painter로 텍스처링한 뒤 Unity에서 셋업했습니다. 개발 1명·기획 1명과 협업해 약 2달간 진행했습니다." style="font-size: 17px;">한국기술교육대학교 가상훈련 콘텐츠 중 경도시험 파트를 담당했습니다. 로크웰·브리넬·비커스·쇼어 4종의 시험 장비를 3ds Max로 모델링하고 Substance Painter로 텍스처링한 뒤 Unity에서 셋업했습니다. 개발 1명·기획 1명과 협업해 약 2달간 진행했습니다.</div></div><div class="vgrid" data-cid="G_hardness"><div><div class="grouplbl" data-key="a_vmtibmfcg20" data-ph="소제목" style="font-size: 15px;">브리넬 경도시험</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg21" data-card="c_vmtibmfcg22" data-url="videos/hardness-brinell.mp4"><video src="videos/hardness-brinell.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-brinell.jpg"></video><span class="ph">+ 동영상 링크</span></div></div><div><div class="grouplbl" data-key="a_vmtibmfcg17" data-ph="소제목" style="font-size: 15px;">로크웰 경도시험</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg18" data-card="c_vmtibmfcg19" data-url="videos/hardness-rockwell.mp4"><video src="videos/hardness-rockwell.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-rockwell.jpg"></video><span class="ph">+ 동영상 링크</span></div></div><div><div class="grouplbl" data-key="a_vmtibmfcg23" data-ph="소제목" style="font-size: 15px;">비커스 경도시험</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg24" data-card="c_vmtibmfcg25" data-url="videos/hardness-vickers.mp4"><video src="videos/hardness-vickers.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-vickers.jpg"></video><span class="ph">+ 동영상 링크</span></div></div><div><div class="grouplbl" data-key="a_vmtibmfcg26" data-ph="소제목" style="font-size: 15px;">쇼어 경도시험</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg27" data-card="c_vmtibmfcg28" data-url="videos/hardness-shore.mp4"><video src="videos/hardness-shore.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-shore.jpg"></video><span class="ph">+ 동영상 링크</span></div></div></div>
+  <section data-sec="sec_vmtibmfcg13" draggable="false" class="" id="p-hardness"><h2><span data-key="a_vmtibmfcg14" data-ph="작품명" style="font-size: 30px;">한국기술교육대학교 가상훈련 · 경도시험</span></h2><div class="textwrap rz" data-card="c_vmtibmfcg15"><div class="sub-line" data-key="a_vmtibmfcg16" data-ph="설명" style="font-size: 17px;">한국기술교육대학교 가상훈련 경도 부분 담당 · 와이엠엑스</div></div><div class="textwrap rz" data-card="c_desc_hardness"><div class="textcard" data-key="a_desc_hardness" data-ph="여기에 내용을 입력하세요" data-raw="한국기술교육대학교 가상훈련 콘텐츠 중 경도시험 파트를 담당했습니다. 로크웰·브리넬·비커스·쇼어 4종의 시험 장비를 3ds Max로 모델링하고 Substance Painter로 텍스처링한 뒤 Unity에서 셋업했습니다. 개발 1명·기획 1명과 협업해 약 2달간 진행했습니다." style="font-size: 17px;">한국기술교육대학교 가상훈련 콘텐츠 중 경도시험 파트를 담당했습니다. 로크웰·브리넬·비커스·쇼어 4종의 시험 장비를 3ds Max로 모델링하고 Substance Painter로 텍스처링한 뒤 Unity에서 셋업했습니다. 개발 1명·기획 1명과 협업해 약 2달간 진행했습니다.</div></div><div class="vgrid" data-cid="G_hardness"><div><div class="grouplbl" data-key="a_vmtibmfcg20" data-ph="소제목" style="font-size: 15px;">브리넬 경도시험 · 10분</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg21" data-card="c_vmtibmfcg22" data-url="videos/hardness-brinell.mp4"><video src="videos/hardness-brinell.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-brinell.jpg"></video><span class="ph">+ 동영상 링크</span></div></div><div><div class="grouplbl" data-key="a_vmtibmfcg17" data-ph="소제목" style="font-size: 15px;">로크웰 경도시험 · 8분</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg18" data-card="c_vmtibmfcg19" data-url="videos/hardness-rockwell.mp4"><video src="videos/hardness-rockwell.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-rockwell.jpg"></video><span class="ph">+ 동영상 링크</span></div></div><div><div class="grouplbl" data-key="a_vmtibmfcg23" data-ph="소제목" style="font-size: 15px;">비커스 경도시험 · 6분</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg24" data-card="c_vmtibmfcg25" data-url="videos/hardness-vickers.mp4"><video src="videos/hardness-vickers.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-vickers.jpg"></video><span class="ph">+ 동영상 링크</span></div></div><div><div class="grouplbl" data-key="a_vmtibmfcg26" data-ph="소제목" style="font-size: 15px;">쇼어 경도시험 · 3분</div><div class="vidslot rz filled" data-vid="vid_vmtibmfcg27" data-card="c_vmtibmfcg28" data-url="videos/hardness-shore.mp4"><video src="videos/hardness-shore.mp4" controls="" playsinline="" preload="metadata" poster="videos/hardness-shore.jpg"></video><span class="ph">+ 동영상 링크</span></div></div></div>
     <div class="metabar">
       <div><div class="mk" data-key="hk-role-k" data-ph="항목명" style="font-size: 13px;">본인 역할</div><div class="mvv" data-key="hk-role" data-ph="역할" style="font-size: 17px;"><span style="letter-spacing: -0.16px;">모델링 · 최적화 · 엔진 셋업</span></div></div>
       <div><div class="mk" data-key="hk-tools-k" data-ph="항목명" style="font-size: 13px;">사용 툴</div><div class="mvv" data-key="hk-tools" data-ph="툴" style="font-size: 17px;"><span style="letter-spacing: -0.16px;">3ds Max · Unity</span><span style="letter-spacing: -0.16px;"> ·&nbsp;Substance painter</span></div></div>
