@@ -256,11 +256,13 @@
   .tcol h3{font-size:14px;color:var(--hint);font-weight:600;margin-bottom:12px;}
   .tcol p{font-size:14.5px;margin:5px 0;}
   /* 경력·자격 칼럼 — 작은 라벨 + 값 (메타바와 같은 형식) */
-  .tcol .textwrap{margin-bottom:15px;}
+  /* 라벨(회색)과 값(검정)을 좌우로 */
+  .tcol .textwrap{display:grid;grid-template-columns:152px 1fr;column-gap:20px;row-gap:3px;
+    align-items:baseline;margin-bottom:13px;}
   .tcol .textwrap:last-child{margin-bottom:0;}
-  .tk{font-size:13px;color:var(--hint);line-height:1.45;}
-  .tv{font-size:16px;color:var(--ink);line-height:1.5;margin-top:1px;}
-  .td{font-size:14px;color:var(--sub);line-height:1.5;margin-top:2px;}
+  .tk{grid-column:1;grid-row:1;font-size:13px;color:var(--hint);line-height:1.5;}
+  .tv{grid-column:2;grid-row:1;font-size:16px;color:var(--ink);line-height:1.5;}
+  .td{grid-column:2;grid-row:2;font-size:14px;color:var(--sub);line-height:1.5;}
   .bar .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;}
   .bar .seg button{border:none;border-radius:0;border-right:1px solid var(--line);padding:7px 11px;}
   .bar .seg button:last-child{border-right:none;}
@@ -324,6 +326,8 @@
     .metric{flex:1 1 100%;}.thumbs > div,.process > .pcard{flex:1 1 100%;}
     .metabar{grid-template-columns:1fr 1fr;}
     .timeline{grid-template-columns:1fr;gap:24px;}
+    .tcol .textwrap{grid-template-columns:1fr;row-gap:1px;}
+    .tk,.tv,.td{grid-column:1;grid-row:auto;}
     .h-big{height:210px;}
     /* 폰: 넓게 기준으로 박아둔 픽셀 크기를 화면 폭에 맞춘다 */
     .wrap .rz.sized{width:auto!important;max-width:100%!important;flex:1 1 100%!important;
@@ -352,7 +356,7 @@
   }
 </style>
 </head>
-<body class="viewer"><!--pf-serial:135-->
+<body class="viewer"><!--pf-serial:137-->
 
 
 
